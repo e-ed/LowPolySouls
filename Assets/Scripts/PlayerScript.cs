@@ -16,6 +16,11 @@ public class PlayerScript : Actor
     GameObject enemyTarget;
     AudioSource audioSource;
     public List<GameObject> inventory = new List<GameObject>();
+    private float maxStamina = 100f;
+    private float stamina = 100f;
+    public float rollStaminaCost = 20f;
+    public float attackStaminaCost = 20f;
+    public float staminaGain = 0.1f;
 
     void Awake()
     {
@@ -52,6 +57,7 @@ public class PlayerScript : Actor
         handleRollInput();
         handleTargetInput();
         handleCombatInput();
+        handleStaminaGain();
     }
 
     private void FixedUpdate()
@@ -61,9 +67,10 @@ public class PlayerScript : Actor
 
     void handleCombatInput()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !isAttacking && (stamina > attackStaminaCost))
         {
             Attack();
+            stamina -= attackStaminaCost;
 
         }
 
@@ -186,25 +193,26 @@ public class PlayerScript : Actor
 
     void handleRollInput()
     {
-        if (isRolling) return;
-
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-
-        Vector3 camForward = cam.forward;
-        Vector3 camRight = cam.right;
-
-        camForward.y = 0;
-        camRight.y = 0;
-
-        Vector3 forwardRelative = verticalInput * camForward;
-        Vector3 rightRelative = horizontalInput * camRight;
-        Vector3 movementDirection = forwardRelative + rightRelative;
-
-        Vector3 inputDir = new Vector3(movementDirection.x, 0f, movementDirection.z).normalized;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (isRolling || stamina < rollStaminaCost) return;
+
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
+
+            Vector3 camForward = cam.forward;
+            Vector3 camRight = cam.right;
+
+            camForward.y = 0;
+            camRight.y = 0;
+
+            Vector3 forwardRelative = verticalInput * camForward;
+            Vector3 rightRelative = horizontalInput * camRight;
+            Vector3 movementDirection = forwardRelative + rightRelative;
+
+            Vector3 inputDir = new Vector3(movementDirection.x, 0f, movementDirection.z).normalized;
+
+
             // Add a boost in the direction of the input while rolling
             Vector3 boostForce = inputDir * rollSpeed;
             rb.AddForce(boostForce, ForceMode.Impulse);
@@ -212,6 +220,8 @@ public class PlayerScript : Actor
             animator.SetTrigger("isRolling");
             isRolling = true;
             //isGrounded = false;
+
+            stamina -= rollStaminaCost;
         }
     }
 
@@ -227,4 +237,18 @@ public class PlayerScript : Actor
     {
         audioSource.Play();
     }
+
+    void handleStaminaGain()
+    {
+        if (stamina < maxStamina)
+        {
+            stamina += staminaGain;
+        }
+    }
+
+    public float Stamina
+    {
+        get { return stamina; }
+    }
 }
+
