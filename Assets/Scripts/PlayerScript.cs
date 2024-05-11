@@ -245,10 +245,6 @@ public class PlayerScript : Actor
         if (stamina < maxStamina)
         {
             stamina += staminaGain * Time.deltaTime;
-            staminaGain *= 1.01f;
-        } else
-        {
-            staminaGain = 0.5f;
         }
     }
 

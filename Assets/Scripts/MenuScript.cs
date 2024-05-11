@@ -8,7 +8,7 @@ public class MenuScript : MonoBehaviour
     public CinemachineFreeLook vcam;
     public void handlePlayButton()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Dungeon");
     }
 
     public void handleExitButton()
