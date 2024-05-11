@@ -113,7 +113,8 @@ public class PlayerScript : Actor
             resetTarget();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
             if (hasTarget)
             {
                 resetTarget();
@@ -135,7 +136,8 @@ public class PlayerScript : Actor
                 vcam.m_Orbits[2].m_Radius = 10.5f;
                 enemyTarget = enemies[0];
                 hasTarget = true;
-            } else
+            }
+            else
             {
                 hasTarget = false;
                 vcam.LookAt = gameObject.transform.GetChild(0);

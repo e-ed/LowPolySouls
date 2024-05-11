@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,10 +37,12 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             swapWeapon(1);
-        } else if (Input.GetKeyDown(KeyCode.Alpha2))
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             swapWeapon(2);
-        } else if (Input.GetKeyDown(KeyCode.Alpha3))
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             swapWeapon(3);
         }
@@ -56,12 +59,13 @@ public class WeaponManager : MonoBehaviour
             swapWeapon(6);
         }
 
-
     }
 
 
     public void swapWeapon(int weaponChoice)
     {
+        if (weaponChoice > weaponSocket.transform.childCount) return;
+
         GameObject targetWeapon = weaponSocket.transform.GetChild(weaponChoice - 1).GetComponent<WeaponScript>().gameObject;
 
         if (!targetWeapon.GetComponent<WeaponScript>().isInPlayerInventory) return;
