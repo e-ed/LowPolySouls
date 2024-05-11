@@ -31342,6 +31342,10 @@ PrefabInstance:
       propertyPath: speed
       value: 250
       objectReference: {fileID: 0}
+    - target: {fileID: 5019940951406741560, guid: 45b7013e92d1f024eabb9aef21a16335, type: 3}
+      propertyPath: staminaGain
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5230946429945716743, guid: 45b7013e92d1f024eabb9aef21a16335, type: 3}
       propertyPath: m_Name
       value: Player

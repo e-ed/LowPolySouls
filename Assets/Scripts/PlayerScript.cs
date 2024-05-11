@@ -20,7 +20,7 @@ public class PlayerScript : Actor
     private float stamina = 100f;
     public float rollStaminaCost = 20f;
     public float attackStaminaCost = 20f;
-    public float staminaGain = 0.1f;
+    public float staminaGain;
 
     void Awake()
     {
@@ -244,7 +244,11 @@ public class PlayerScript : Actor
     {
         if (stamina < maxStamina)
         {
-            stamina += staminaGain;
+            stamina += staminaGain * Time.deltaTime;
+            staminaGain *= 1.01f;
+        } else
+        {
+            staminaGain = 0.5f;
         }
     }
 

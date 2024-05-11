@@ -9,7 +9,7 @@ public class StaminaBar : MonoBehaviour
     public Slider staminaBarSlider;
     Actor currentActor;
     public Slider easeStaminaSlider;
-    private float lerpDuration = 0.3f;  // Adjust this value as needed
+    private float lerpDuration = 0.15f;  // Adjust this value as needed
     private Coroutine lerpCoroutine;
     private PlayerScript playerScript;
 
