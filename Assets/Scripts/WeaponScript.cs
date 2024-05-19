@@ -21,8 +21,6 @@ public class WeaponScript : MonoBehaviour
     [SerializeField]
     public float weaponSpeed;
 
-
-
     public Boolean isInPlayerInventory = false;
 
     private float damageCooldown = 2.0f;
