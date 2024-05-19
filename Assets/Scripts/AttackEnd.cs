@@ -8,7 +8,7 @@ public class AttackEnd : StateMachineBehaviour
     private float weaponSpeed;
     public void OnEnable()
     {
-         weaponSocket = GameObject.FindGameObjectWithTag("WeaponSocket");
+        weaponSocket = GameObject.FindGameObjectWithTag("WeaponSocket");
     }
 
     // Function to find a child with a specific tag
@@ -31,19 +31,11 @@ public class AttackEnd : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.gameObject.GetComponent<Actor>().isAttacking = true;
-        // Find the weapon GameObject as a child with the "Weapon" tag
 
-        if (animator.gameObject.name == "Player")
-        {
-            weapon = weaponSocket.GetComponent<WeaponManager>().currentWeapon;
-            weaponSpeed = weapon.GetComponent<WeaponScript>().weaponSpeed;
-            animator.SetFloat("weaponSpeed", weaponSpeed);
-        }
-        else
-        {
-            weapon = FindChildWithTag(animator.gameObject, "Weapon");
-        }
-        
+        weapon = weaponSocket.GetComponent<WeaponManager>().currentWeapon;
+        weaponSpeed = weapon.GetComponent<WeaponScript>().weaponSpeed;
+        animator.SetFloat("weaponSpeed", weaponSpeed);
+
 
         // Check if the weapon GameObject was found
         if (weapon != null)

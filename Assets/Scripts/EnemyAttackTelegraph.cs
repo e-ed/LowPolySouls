@@ -6,6 +6,24 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
 {
     float slowDown;
     float timePassed;
+    GameObject weapon;
+
+    GameObject FindChildWithTag(GameObject parent, string tag)
+    {
+        Transform[] children = parent.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in children)
+        {
+            if (child.CompareTag(tag))
+            {
+                return child.gameObject;
+            }
+        }
+
+        return null;
+    }
+
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         slowDown = 1.5f;
@@ -23,14 +41,21 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
         } else
         {
             animator.SetFloat("Telegraph", 1);
+            weapon = FindChildWithTag(animator.gameObject, "Weapon");
+            weapon.GetComponent<MeshCollider>().enabled = true;
+            animator.gameObject.GetComponent<Actor>().isAttacking = true;
         }
     }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.gameObject.GetComponent<Actor>().isAttacking = false;
+        if (weapon == null) return;
+        MeshCollider collider = weapon.GetComponent<MeshCollider>();
+        if (collider  != null) {
+            weapon.GetComponent<MeshCollider>().enabled = false;
+        }
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
