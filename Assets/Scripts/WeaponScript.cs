@@ -25,13 +25,13 @@ public class WeaponScript : MonoBehaviour
 
     public Boolean isInPlayerInventory = false;
 
-    private float damageCooldown = 2.0f; 
+    private float damageCooldown = 2.0f;
     private float damageCooldownTimer = 0.0f;
     private Boolean canPlayTakeDamageAnimation = true;
 
     private void Update()
     {
-        
+
         if (damageCooldownTimer > 0.0f)
         {
             damageCooldownTimer += Time.deltaTime;
@@ -51,29 +51,27 @@ public class WeaponScript : MonoBehaviour
         Actor attackTarget = other.gameObject.GetComponent<Actor>();
         Actor attackSource = topMostParentOfAttackSource.GetComponent<Actor>();
 
+        if (attackTarget == null) return;
 
-        if (attackTarget != null)
+        if (attackTarget.isRolling) return;
+
+        int attackDamage = ((int)weaponDamage) + (attackSource.Strength * attackSource.Level) + UnityEngine.Random.Range(0, attackSource.Level);
+        bool isCritical = UnityEngine.Random.Range(0, 100) < 30;
+        if (isCritical) attackDamage *= 3;
+
+        attackTarget.CurrentHP -= attackDamage;
+
+        if (attackTarget.CurrentHP < 0) attackTarget.CurrentHP = 0;
+
+        InstantiateDamagePopup(attackDamage, isCritical, other.transform.position, attackTarget);
+
+        if (canPlayTakeDamageAnimation)
         {
-            if (attackTarget.isRolling) return;
-            int attackDamage = ((int) weaponDamage) + (attackSource.Strength * attackSource.Level) + UnityEngine.Random.Range(0, attackSource.Level);
-            bool isCritical = UnityEngine.Random.Range(0, 100) < 30;
-            if (isCritical)
-            {
-                attackDamage *= 3;
-            }
-            //Debug.Log(attackDamage);
-            //Debug.Log(isCritical);
-            attackTarget.CurrentHP -= attackDamage;
-
-            InstantiateDamagePopup(attackDamage, isCritical, other.transform.position, attackTarget);
-
-            if (canPlayTakeDamageAnimation)
-            {
-                attackTarget.GetComponentInChildren<Animator>().SetTrigger("takeDamage");
-                canPlayTakeDamageAnimation = false;
-                damageCooldownTimer = 0.1f;
-            }
+            attackTarget.GetComponentInChildren<Animator>().SetTrigger("takeDamage");
+            canPlayTakeDamageAnimation = false;
+            damageCooldownTimer = 0.1f;
         }
+
     }
 
     GameObject findTopMostParent(GameObject other)
@@ -106,7 +104,7 @@ public class WeaponScript : MonoBehaviour
         Debug.Log(collision.ToString());
     }
 
-   
+
 
     void InstantiateDamagePopup(int damage, bool isCritical, Vector3 position, Actor attackTarget)
     {
@@ -119,6 +117,15 @@ public class WeaponScript : MonoBehaviour
             originalPosition = textMeshPro.transform.position;
             textMeshPro.gameObject.SetActive(true);
             textMeshPro.SetText(damage.ToString());
+
+            if (isCritical)
+            {
+                textMeshPro.color = Color.yellow;
+            }
+            else
+            {
+                textMeshPro.color = Color.white; 
+            }
 
             if (damagePopup != null)
             {
@@ -133,7 +140,7 @@ public class WeaponScript : MonoBehaviour
         {
             textMeshPro.gameObject.SetActive(false);
         }
-        }
+    }
 
 
 }

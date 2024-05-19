@@ -22,7 +22,7 @@ public class DeleteAfterDead : StateMachineBehaviour
     {
         animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         NTime = animStateInfo.normalizedTime;
-        if (NTime > 1.0f) Destroy(animator.gameObject);
+        if (NTime > 1.0f && animStateInfo.IsName("Dying")) Destroy(animator.gameObject);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
