@@ -3036,11 +3036,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  speed: 400
+  isRolling: 0
+  speed: 250
   rollSpeed: 10
   cam: {fileID: 0}
   animator: {fileID: 5024648051257844079}
   inventory: []
+  rollStaminaCost: 20
+  attackStaminaCost: 20
+  staminaGain: 7
 --- !u!54 &5672465856872282949
 Rigidbody:
   m_ObjectHideFlags: 0

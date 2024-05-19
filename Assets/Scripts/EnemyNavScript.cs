@@ -10,7 +10,7 @@ public class EnemyNavScript : MonoBehaviour
     Transform playerTransform; // Cache player's transform for performance
     Animator animator;
     public float cooldown;
-    private float nextAttack;
+    private float timeUntilNextAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class EnemyNavScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.Find("Player").transform;
         animator = GetComponent<Animator>();
-        nextAttack = cooldown;
+        timeUntilNextAttack = cooldown;
     }
 
     // Update is called once per frame
@@ -29,32 +29,26 @@ public class EnemyNavScript : MonoBehaviour
             return;
         }
 
-
-        // Get the speed from the NavMeshAgent
         float speed = agent.velocity.magnitude;
 
-        // Set animator parameter based on the speed
         animator.SetFloat("Horizontal", speed);
+
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        if (distanceToPlayer < 10 && !gameObject.GetComponent<EnemyScript>().isAttacking)
+        if (distanceToPlayer > 10 || gameObject.GetComponent<EnemyScript>().isAttacking) return;
+
+        agent.SetDestination(playerTransform.position);
+
+        if (timeUntilNextAttack > 0)
         {
-            agent.SetDestination(playerTransform.position);
+            timeUntilNextAttack -= Time.deltaTime;
         }
 
-
-        if (nextAttack > 0)
-        {
-            nextAttack -= Time.deltaTime;
-        }
-
-        // Use the distance in your logic or animations
-        if (distanceToPlayer < 2 && nextAttack <= 0)
+        if (distanceToPlayer < 2 && timeUntilNextAttack <= 0)
         {
             animator.SetTrigger("Attack");
-            nextAttack = cooldown;
+            timeUntilNextAttack = cooldown;
         }
-
 
     }
 }

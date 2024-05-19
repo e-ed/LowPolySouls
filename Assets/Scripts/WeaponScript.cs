@@ -73,11 +73,6 @@ public class WeaponScript : MonoBehaviour
                 canPlayTakeDamageAnimation = false;
                 damageCooldownTimer = 0.1f;
             }
-
-            if (attackTarget.CurrentHP < 0 && !attackTarget.gameObject.name.Contains("Player"))
-            {
-                attackTarget.CurrentHP = 0;
-            }
         }
     }
 

@@ -182,15 +182,10 @@ public class PlayerScript : Actor
         animator.SetFloat("Vertical", Mathf.Abs(movement.z));
 
 
-
         if (inputDir != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(inputDir);
-            //Quaternion targetRotation = Quaternion.LookRotation(inputDir);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
-
         }
-
     }
 
     void handleRollInput()
