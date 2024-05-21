@@ -3814,7 +3814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180113254}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23550014, y: 0.00000013833768, z: -0.000000033521353, w: 0.97187436}
+  m_LocalRotation: {x: 0.23550014, y: 0.0000001048928, z: -0.000000025417139, w: 0.97187436}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4188,7 +4188,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193449507}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23550014, y: 0.0000001550601, z: -0.000000037573457, w: 0.9718743}
+  m_LocalRotation: {x: 0.23550014, y: 0.000000088170346, z: -0.000000021365036, w: 0.9718743}
   m_LocalPosition: {x: 1.9349991, y: 3.4266868, z: 103.981735}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5624,10 +5624,6 @@ PrefabInstance:
     - target: {fileID: 1948535115976630, guid: f1d079f7dbed3ab43bb0f2536cfd022b, type: 3}
       propertyPath: m_Name
       value: Enemy8 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1948535115976630, guid: f1d079f7dbed3ab43bb0f2536cfd022b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4028250183184810, guid: f1d079f7dbed3ab43bb0f2536cfd022b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27442,10 +27438,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
-    - target: {fileID: 9071266492952937067, guid: 0a9058e0950f79e4b8a4946cbfaf2b04, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27854,10 +27846,6 @@ PrefabInstance:
     - target: {fileID: 8172442304542317006, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
       propertyPath: m_Name
       value: Enemy4 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8172442304542317006, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class WeaponScript : MonoBehaviour
 {
@@ -110,25 +111,14 @@ public class WeaponScript : MonoBehaviour
 
         if (enemyCanvas != null)
         {
-            GameObject damagePopup = enemyCanvas.transform.GetChild(1).gameObject;
-            textMeshPro = damagePopup.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>();
-            originalPosition = textMeshPro.transform.position;
-            textMeshPro.gameObject.SetActive(true);
-            textMeshPro.SetText(damage.ToString());
+            UnityEngine.Object dynamicDamagePopup = Instantiate(Resources.Load("Prefabs/Damage Popup"), enemyCanvas.transform, false);
+            TextMeshPro dynamicDamagePopupText = dynamicDamagePopup.GetComponentInChildren<TextMeshPro>();
+            dynamicDamagePopupText.text = damage.ToString();
+            dynamicDamagePopupText.color = isCritical ? Color.yellow : Color.white;
+            if (attackTarget.name == "Player") dynamicDamagePopupText.color = Color.red;
+            dynamicDamagePopupText.transform.localPosition = new Vector3(0, 0f, 0);
+            Destroy(dynamicDamagePopup, 1.5f);
 
-            if (isCritical)
-            {
-                textMeshPro.color = Color.yellow;
-            }
-            else
-            {
-                textMeshPro.color = Color.white; 
-            }
-
-            if (damagePopup != null)
-            {
-                Invoke("disableText", 1f);
-            }
         }
     }
 
