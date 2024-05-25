@@ -3207,9 +3207,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.9509267
+  m_Height: 1.9222163
   m_Direction: 1
-  m_Center: {x: 0, y: 0.91999954, z: 0}
+  m_Center: {x: 0, y: 0.93435466, z: 0}
 --- !u!82 &4819868825797155691
 AudioSource:
   m_ObjectHideFlags: 0

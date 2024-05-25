@@ -5,6 +5,7 @@ public class MenuScript : MonoBehaviour
 {
 
     public GameObject panel;
+    public GameObject playerStats;
     public CinemachineFreeLook vcam;
     public void handlePlayButton()
     {
@@ -18,7 +19,7 @@ public class MenuScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && SceneManager.GetActiveScene().name != "Menu")
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "Menu")
         {
             Cursor.visible = !Cursor.visible;
             panel.SetActive(!panel.activeSelf);
@@ -26,10 +27,29 @@ public class MenuScript : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.Confined;
                 vcam.enabled = false;
+                Time.timeScale = 0;
             } else
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 vcam.enabled = true;
+                Time.timeScale = 1;
+
+            }
+        } else if (Input.GetKeyDown(KeyCode.I))
+        {
+            Cursor.visible = !Cursor.visible;
+            playerStats.SetActive(!playerStats.activeSelf);
+            if (playerStats.activeSelf)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                vcam.enabled = false;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                vcam.enabled = true;
+                Time.timeScale = 1;
             }
         }
     }

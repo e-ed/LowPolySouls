@@ -62,7 +62,7 @@ public class WeaponScript : MonoBehaviour
 
         if (attackTarget.CurrentHP < 0) attackTarget.CurrentHP = 0;
 
-        InstantiateDamagePopup(attackDamage, isCritical, other.transform.position, attackTarget);
+        InstantiateDamagePopup(attackDamage, isCritical, attackTarget);
 
         if (canPlayTakeDamageAnimation)
         {
@@ -105,7 +105,7 @@ public class WeaponScript : MonoBehaviour
 
 
 
-    void InstantiateDamagePopup(int damage, bool isCritical, Vector3 position, Actor attackTarget)
+    void InstantiateDamagePopup(int damage, bool isCritical, Actor attackTarget)
     {
         Canvas enemyCanvas = attackTarget.GetComponentInChildren<Canvas>();
 
@@ -121,14 +121,4 @@ public class WeaponScript : MonoBehaviour
 
         }
     }
-
-    void disableText()
-    {
-        if (textMeshPro != null)
-        {
-            textMeshPro.gameObject.SetActive(false);
-        }
-    }
-
-
 }
