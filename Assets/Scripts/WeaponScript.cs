@@ -117,6 +117,7 @@ public class WeaponScript : MonoBehaviour
             dynamicDamagePopupText.color = isCritical ? Color.yellow : Color.white;
             if (attackTarget.name == "Player") dynamicDamagePopupText.color = Color.red;
             dynamicDamagePopupText.transform.localPosition = new Vector3(0, 0f, 0);
+            dynamicDamagePopupText.fontSize = 2.5f;
             Destroy(dynamicDamagePopup, 1.5f);
 
         }

@@ -35,7 +35,15 @@ public class EnemyNavScript : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        if (distanceToPlayer > 10 || gameObject.GetComponent<EnemyScript>().isAttacking) return;
+        if (distanceToPlayer > 10) return;
+
+        if (gameObject.GetComponent<EnemyScript>().isAttacking)
+        {
+            agent.isStopped = true;
+            return;
+        }
+
+        agent.isStopped = false;
 
         agent.SetDestination(playerTransform.position);
 

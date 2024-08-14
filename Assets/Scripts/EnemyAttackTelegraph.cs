@@ -29,6 +29,7 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
         slowDown = 1.5f;
         timePassed = 0;
         animator.SetFloat("Telegraph", 0.1f);
+        animator.gameObject.GetComponent<Actor>().isAttacking = true;
 
     }
 
@@ -43,7 +44,6 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
             animator.SetFloat("Telegraph", 1);
             weapon = FindChildWithTag(animator.gameObject, "Weapon");
             weapon.GetComponent<MeshCollider>().enabled = true;
-            animator.gameObject.GetComponent<Actor>().isAttacking = true;
         }
     }
 

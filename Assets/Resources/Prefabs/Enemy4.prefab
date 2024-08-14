@@ -2213,7 +2213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc379b19249d7584381e81445bad785f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 3
+  cooldown: 1.5
 --- !u!82 &2123837510640173248
 AudioSource:
   m_ObjectHideFlags: 0

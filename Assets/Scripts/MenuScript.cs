@@ -35,7 +35,7 @@ public class MenuScript : MonoBehaviour
                 Time.timeScale = 1;
 
             }
-        } else if (Input.GetKeyDown(KeyCode.I))
+        } else if (Input.GetKeyDown(KeyCode.C))
         {
             Cursor.visible = !Cursor.visible;
             playerStats.SetActive(!playerStats.activeSelf);
