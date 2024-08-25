@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackEnd : StateMachineBehaviour
@@ -6,6 +5,7 @@ public class AttackEnd : StateMachineBehaviour
     private GameObject weapon;
     private GameObject weaponSocket;
     private float weaponSpeed;
+    private int previousStateHash;
     public void OnEnable()
     {
         weaponSocket = GameObject.FindGameObjectWithTag("WeaponSocket");
@@ -30,7 +30,11 @@ public class AttackEnd : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        previousStateHash = animator.GetCurrentAnimatorStateInfo(layerIndex).shortNameHash;
+
         animator.gameObject.GetComponent<Actor>().isAttacking = true;
+        animator.SetBool("isAttacking", true);
+
 
         weapon = weaponSocket.GetComponent<WeaponManager>().currentWeapon;
         weaponSpeed = weapon.GetComponent<WeaponScript>().weaponSpeed;
@@ -62,30 +66,37 @@ public class AttackEnd : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Check if the AttackTrigger is still active
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
-        {
-            // Access the MeshCollider and disable it
-            MeshCollider collider = weapon.GetComponent<MeshCollider>();
-            if (collider != null)
-            {
-                collider.enabled = false;
-            }
-            else
-            {
-                Debug.LogError("MeshCollider not found on the weapon GameObject.");
-            }
+        // Get the name of the current animation state
+        string currentStateName = animator.GetCurrentAnimatorClipInfo(layerIndex)[0].clip.name;
 
-            // Access the PlayerScript and set isAttacking to false
-            PlayerScript playerScript = animator.gameObject.GetComponent<PlayerScript>();
-            if (playerScript != null)
-            {
-                playerScript.isAttacking = false;
-            }
-            else
-            {
-                animator.gameObject.GetComponent<EnemyScript>().isAttacking = false;
-            }
+        if (currentStateName.Equals("mixamo.com"))
+        {
+            return;
         }
+
+
+        // Access the MeshCollider and disable it
+        MeshCollider collider = weapon.GetComponent<MeshCollider>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
+        else
+        {
+            Debug.LogError("MeshCollider not found on the weapon GameObject.");
+        }
+
+        // Access the PlayerScript and set isAttacking to false
+        PlayerScript playerScript = animator.gameObject.GetComponent<PlayerScript>();
+        if (playerScript != null)
+        {
+            playerScript.isAttacking = false;
+            animator.SetBool("isAttacking", false);
+        }
+        else
+        {
+            animator.gameObject.GetComponent<EnemyScript>().isAttacking = false;
+        }
+
     }
 }

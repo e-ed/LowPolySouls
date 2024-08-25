@@ -67,7 +67,7 @@ public class PlayerScript : Actor
 
     void handleCombatInput()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttacking && (stamina > attackStaminaCost))
+        if (Input.GetMouseButtonDown(0) && (stamina > attackStaminaCost))
         {
             Attack();
             stamina -= attackStaminaCost;

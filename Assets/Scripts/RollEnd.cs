@@ -18,12 +18,12 @@ public class RollEnd : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        NTime = animStateInfo.normalizedTime;
-        if (NTime > 0.7f)
-        {
-            //animator.gameObject.GetComponent<Actor>().isRolling = false;
-        }
+        //animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        //NTime = animStateInfo.normalizedTime;
+        //if (NTime > 0.7f)
+        //{
+        //    //animator.gameObject.GetComponent<Actor>().isRolling = false;
+        //}
 
     }
 
