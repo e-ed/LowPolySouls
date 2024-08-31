@@ -66,8 +66,14 @@ public class AttackEnd : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Get the name of the current animation state
-        string currentStateName = animator.GetCurrentAnimatorClipInfo(layerIndex)[0].clip.name;
+        var clipInfo = animator.GetCurrentAnimatorClipInfo(layerIndex);
+        string currentStateName = "";
+
+        if (clipInfo != null && clipInfo.Length > 0)
+        {
+            currentStateName = clipInfo[0].clip.name;
+        }
+        
 
         if (currentStateName.Equals("mixamo.com"))
         {
