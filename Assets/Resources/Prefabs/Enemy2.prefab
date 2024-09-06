@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 08bab25cd19748d4ab007144d1cb68c6, type: 2}
+    - target: {fileID: 6745848289492029256, guid: 0a9058e0950f79e4b8a4946cbfaf2b04, type: 3}
+      propertyPath: souls
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7593173590084808819, guid: 0a9058e0950f79e4b8a4946cbfaf2b04, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -82,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9071266492952937067, guid: 0a9058e0950f79e4b8a4946cbfaf2b04, type: 3}
       propertyPath: m_Name
-      value: Enemy Variant 2
+      value: Enemy2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

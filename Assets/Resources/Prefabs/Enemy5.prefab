@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 509812679042287242, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
+      propertyPath: souls
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1030275230283731142, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -74,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8172442304542317006, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
       propertyPath: m_Name
-      value: Enemy4 Variant
+      value: Enemy5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

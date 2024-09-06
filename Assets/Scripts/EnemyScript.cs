@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyScript : Actor
 {
     Animator animator;
     public bool hasDied = false;
     AudioSource audioSource;
+    public int souls;
 
     void Awake()
     {
