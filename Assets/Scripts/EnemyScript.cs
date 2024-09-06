@@ -5,7 +5,8 @@ public class EnemyScript : Actor
     Animator animator;
     public bool hasDied = false;
     AudioSource audioSource;
-    public int souls;
+    public int soulsDrop;
+
 
     void Awake()
     {
@@ -17,7 +18,7 @@ public class EnemyScript : Actor
         Intelligence = 3;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        
+
     }
 
     void Start()
@@ -36,10 +37,10 @@ public class EnemyScript : Actor
         {
             hasDied = true;
             animator.SetTrigger("Dead");
+
+            EventManager.TriggerEvent("EnemyDied", soulsDrop);
         }
     }
-
-
 
 
 }

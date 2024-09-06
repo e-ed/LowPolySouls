@@ -30,6 +30,7 @@ public class AttackEnd : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        animator.gameObject.GetComponent<PlayerScript>().isAttacking = true;
         previousStateHash = animator.GetCurrentAnimatorStateInfo(layerIndex).shortNameHash;
 
         animator.gameObject.GetComponent<Actor>().isAttacking = true;
@@ -73,7 +74,7 @@ public class AttackEnd : StateMachineBehaviour
         {
             currentStateName = clipInfo[0].clip.name;
         }
-        
+
 
         if (currentStateName.Equals("mixamo.com"))
         {
@@ -83,26 +84,24 @@ public class AttackEnd : StateMachineBehaviour
 
         // Access the MeshCollider and disable it
         MeshCollider collider = weapon.GetComponent<MeshCollider>();
-        if (collider != null)
-        {
-            collider.enabled = false;
-        }
-        else
+        if (collider == null)
         {
             Debug.LogError("MeshCollider not found on the weapon GameObject.");
         }
 
-        // Access the PlayerScript and set isAttacking to false
-        PlayerScript playerScript = animator.gameObject.GetComponent<PlayerScript>();
-        if (playerScript != null)
+
+        Actor currentActor = animator.gameObject.GetComponent<Actor>();
+
+
+        if (string.IsNullOrEmpty(currentStateName))
         {
-            playerScript.isAttacking = false;
-            animator.SetBool("isAttacking", false);
+            return;
         }
-        else
-        {
-            animator.gameObject.GetComponent<EnemyScript>().isAttacking = false;
-        }
+
+        collider.enabled = false;
+        currentActor.isAttacking = false;
+        animator.SetBool("isAttacking", false);
+
 
     }
 }

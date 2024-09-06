@@ -1,5 +1,7 @@
 using Cinemachine;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -21,6 +23,14 @@ public class PlayerScript : Actor
     public float rollStaminaCost = 20f;
     public float attackStaminaCost = 20f;
     public float staminaGain;
+    private int souls;
+    private TextMeshPro soulsText;
+
+    public int Souls
+    {
+        get { return souls; }
+        set { souls = value; }
+    }
 
     void Awake()
     {
@@ -39,7 +49,38 @@ public class PlayerScript : Actor
         vcam = FindObjectOfType<CinemachineFreeLook>();
         cam = GameObject.Find("Camera").transform;
 
+    }
 
+    private void updateSoulsPanel()
+    {
+        if (soulsText != null)
+        {
+            // Update the text to reflect the current soul count
+            soulsText.text = souls.ToString();
+        }
+    }
+
+    void GainSouls(int soulAmount)
+    {
+        // Add the souls to the player's total souls
+        souls += soulAmount;
+        EventManager.TriggerEvent("UpdateSoulsPanel", souls);
+    }
+
+    void OnEnemyDied(object soulsGained)
+    {
+        // Give souls to the player when an enemy dies
+        GainSouls((int)soulsGained); // Adjust soul value based on game logic
+    }
+
+    void OnEnable()
+    {
+        EventManager.StartListening("EnemyDied", OnEnemyDied);
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening("EnemyDied", OnEnemyDied);
     }
 
     private void Start()
@@ -93,7 +134,8 @@ public class PlayerScript : Actor
 
     public override void Attack()
     {
-        isAttacking = true;
+        // doing it inside the animator instead
+        // isAttacking = true;
         animator.SetTrigger("Attack");
     }
 

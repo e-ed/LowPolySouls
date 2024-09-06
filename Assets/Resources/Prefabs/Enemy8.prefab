@@ -6370,7 +6370,7 @@ MonoBehaviour:
   isAttacking: 0
   isRolling: 0
   hasDied: 0
-  souls: 5
+  soulsDrop: 15
 --- !u!82 &484249007643557461
 AudioSource:
   m_ObjectHideFlags: 0
