@@ -28,7 +28,7 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
     {
         weapon = FindChildWithTag(animator.gameObject, "Weapon");
         weapon.GetComponent<WeaponScript>().ResetDamageFlag();
-        slowDown = 1.5f;
+        slowDown = 1.4f;
         timePassed = 0;
         animator.SetFloat("Telegraph", 0.1f);
         animator.gameObject.GetComponent<Actor>().isAttacking = true;

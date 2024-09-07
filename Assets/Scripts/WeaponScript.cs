@@ -16,6 +16,8 @@ public class WeaponScript : MonoBehaviour
 
     Vector3 originalPosition;
 
+    float offset = -0.5f;
+
 
     [SerializeField]
     public float weaponDamage;
@@ -138,8 +140,12 @@ public class WeaponScript : MonoBehaviour
             TextMeshPro dynamicDamagePopupText = dynamicDamagePopup.GetComponentInChildren<TextMeshPro>();
             dynamicDamagePopupText.text = damage.ToString();
             dynamicDamagePopupText.color = isCritical ? Color.yellow : Color.white;
-            if (attackTarget.name == "Player") dynamicDamagePopupText.color = Color.red;
             dynamicDamagePopupText.transform.localPosition = new Vector3(0, 0f, 0);
+            if (attackTarget.name == "Player")
+            {
+                dynamicDamagePopupText.color = Color.red;
+                dynamicDamagePopupText.transform.localPosition = new Vector3(dynamicDamagePopupText.transform.localPosition.x, dynamicDamagePopupText.transform.localPosition.y + offset, dynamicDamagePopupText.transform.localPosition.z); 
+            }
             dynamicDamagePopupText.fontSize = 2.5f;
             Destroy(dynamicDamagePopup, 1.5f);
 

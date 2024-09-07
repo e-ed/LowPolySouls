@@ -282,31 +282,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &-4219934485087095545
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: takeDamage
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 8753220889017396007}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.7115385
-  m_HasExitTime: 0
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!206 &-4191525297792410211
 BlendTree:
   m_ObjectHideFlags: 1
@@ -350,7 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c6d38759618d64db9b61f170d29f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NTime: 0
 --- !u!1101 &-2841607052527312562
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -647,7 +621,6 @@ AnimatorState:
   m_Transitions:
   - {fileID: -6416896010634498734}
   - {fileID: -6163855474710199284}
-  - {fileID: -4219934485087095545}
   - {fileID: 1325297339357972081}
   - {fileID: 3536700570996709520}
   m_StateMachineBehaviours:

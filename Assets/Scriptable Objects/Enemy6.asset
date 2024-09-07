@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Enemy6
   m_EditorClassIdentifier: 
   Level: 2
-  Strength: 6
+  Strength: 10
   Dexterity: 4
   Intelligence: 5

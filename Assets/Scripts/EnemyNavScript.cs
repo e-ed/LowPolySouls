@@ -65,4 +65,9 @@ public class EnemyNavScript : MonoBehaviour
         }
 
     }
+
+    private void SetAttackTrigger()
+    {
+        animator.SetTrigger("Attack");
+    }
 }

@@ -69,9 +69,9 @@ public class DataHandler : MonoBehaviour
             {
                 level = 1,
                 souls = 0,
-                strength = 10,
-                dexterity = 10,
-                intelligence = 10,
+                strength = 5,
+                dexterity = 5,
+                intelligence = 5,
                 positionX = 2,
                 positionY = 2,
                 positionZ = 107
