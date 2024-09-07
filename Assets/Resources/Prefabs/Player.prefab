@@ -6600,6 +6600,7 @@ MonoBehaviour:
   weaponDamage: 10
   weaponSpeed: 1
   isInPlayerInventory: 0
+  hasDealtDamage: 0
 --- !u!1001 &7270447861474971672
 PrefabInstance:
   m_ObjectHideFlags: 0

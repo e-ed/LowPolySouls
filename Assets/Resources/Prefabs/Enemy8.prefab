@@ -6224,7 +6224,7 @@ GameObject:
   - component: {fileID: -5997448681045483902}
   - component: {fileID: 4845246316199506800}
   - component: {fileID: 484249007643557461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy8
   m_TagString: ActorWithScript
   m_Icon: {fileID: 0}
@@ -6317,9 +6317,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.144361
+  m_Height: 2.11437
   m_Direction: 1
-  m_Center: {x: 0, y: 1.0134795, z: 0}
+  m_Center: {x: 0, y: 1.0660462, z: 0}
 --- !u!195 &-5126722037373428901
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6964,6 +6964,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6736026546133064930}
+  - {fileID: 1528833860321178885}
   m_Father: {fileID: 4028250183184810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7359,6 +7360,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &5502105493856814963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528833860321178885}
+  m_Layer: 3
+  m_Name: TargetCircleSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1528833860321178885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5502105493856814963}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.028000003, y: 1.641, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2672047704009096717}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8587652334303175108
 GameObject:
   m_ObjectHideFlags: 0

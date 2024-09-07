@@ -33,6 +33,10 @@ public class PlayerScript : Actor
     private bool hasDied = false;
     private float rollCooldown = 0.6f; // Half a second cooldown
     private float lastRollTime;
+    GameObject targetCircle;
+    GameObject currentTarget;
+    public float rayDistance;
+    float enemyHeight;
 
     public int Souls
     {
@@ -48,7 +52,7 @@ public class PlayerScript : Actor
 
     void Awake()
     {
-        
+
     }
 
 
@@ -142,6 +146,7 @@ public class PlayerScript : Actor
         //animator.SetBool("Block", false);  // Reset animation states if necessary
         animator.SetTrigger("Respawn");  // Optionally play a respawn animation
         rb.velocity = Vector3.zero;  // Stop any momentum the player had
+        resetTarget();
     }
 
 
@@ -171,6 +176,7 @@ public class PlayerScript : Actor
         //weaponSocket = GameObject.FindGameObjectsWithTag("WeaponSocket")[0];
         vcam = FindObjectOfType<CinemachineFreeLook>();
         cam = GameObject.Find("Camera").transform;
+        targetCircle = (GameObject)Resources.Load("Target Circle");
 
         //inventory.Add((GameObject) Resources.Load("Low-Poly Weapons/Prefabs/Sword"));
         //inventory.Add((GameObject)Resources.Load("Low-Poly Weapons/Prefabs/Dagger"));
@@ -210,7 +216,8 @@ public class PlayerScript : Actor
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (stamina > attackStaminaCost) { 
+            if (stamina > attackStaminaCost)
+            {
                 Attack();
             }
             stamina -= attackStaminaCost;
@@ -249,17 +256,27 @@ public class PlayerScript : Actor
     private void resetTarget()
     {
         hasTarget = false;
-        vcam.LookAt = gameObject.transform.GetChild(0);
-        vcam.m_Orbits[0].m_Radius = 9;
-        vcam.m_Orbits[1].m_Radius = 8;
-        vcam.m_Orbits[2].m_Radius = 7.5f;
+        vcam.LookAt = gameObject.transform;
+        // vcam.Follow = gameObject.transform;
+        vcam.m_Orbits[0].m_Radius = 8;
+        vcam.m_Orbits[1].m_Radius = 7;
+        vcam.m_Orbits[2].m_Radius = 6.5f;
+        Destroy(currentTarget);
     }
 
     void handleTargetInput()
     {
-        if (hasTarget == true && enemyTarget == null)
+        if (hasTarget && enemyTarget == null)
         {
             resetTarget();
+        }
+
+        if (hasTarget)
+        {
+            // Update position based on the enemy's height
+            //RectTransform rt = currentTarget.GetComponent<RectTransform>();
+            //float offsetY = enemyHeight - 0.25f; // Adjust as needed
+            //rt.anchoredPosition = new Vector2(0, offsetY); // Adjust Y position to align with enemy height
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -269,36 +286,54 @@ public class PlayerScript : Actor
                 resetTarget();
                 return;
             }
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
-            {
-                Debug.Log(enemy.name);
-            }
 
-            // targetting the first enemy found
-            if (enemies.Length != 0)
+            LayerMask mask = LayerMask.GetMask("Enemy");
+
+            // Set up the direction and distance of the raycast
+            Vector3 rayOrigin = transform.position + new Vector3(0, 1, 0);
+            Vector3 rayDirection = transform.forward;
+
+            RaycastHit hit;
+            if (Physics.Raycast(rayOrigin, rayDirection, out hit, rayDistance, mask))
             {
-                Debug.Log(enemies[0]);
-                vcam.LookAt = enemies[0].transform;
-                vcam.m_Orbits[0].m_Radius = 12;
-                vcam.m_Orbits[1].m_Radius = 11;
-                vcam.m_Orbits[2].m_Radius = 10.5f;
-                enemyTarget = enemies[0];
                 hasTarget = true;
-            }
-            else
-            {
-                hasTarget = false;
-                vcam.LookAt = gameObject.transform.GetChild(0);
-            }
-            Debug.Log(enemyTarget);
+                enemyTarget = hit.collider.gameObject;
 
+                vcam.LookAt = enemyTarget.transform;
+                //vcam.Follow = enemyTarget.transform;
+
+                Collider enemyCollider = enemyTarget.GetComponent<Collider>();
+
+
+                if (enemyCollider != null)
+                {
+                    Canvas enemyCanvas = enemyTarget.GetComponentInChildren<Canvas>();
+                    Transform targetSpawnPoint = enemyCanvas.transform.Find("TargetCircleSpawnPoint");
+                    if (enemyCanvas != null)
+                    {
+                        if (currentTarget != null)
+                        {
+                            Destroy(currentTarget);
+                        }
+                        currentTarget = Instantiate(targetCircle, targetSpawnPoint.transform, false); // Instantiate as a child of the canvas
+                        currentTarget.transform.localPosition += new Vector3(0, 0, -0.5f);
+                        //RectTransform rt = currentTarget.GetComponent<RectTransform>();
+                        //rt.anchorMin = new Vector2(0.5f, 0.5f); // Centered relative to the Canvas
+                        //rt.anchorMax = new Vector2(0.5f, 0.5f); // Centered relative to the Canvas
+                        //rt.pivot = new Vector2(0.5f, 0.5f);   // Centered pivot
+                        //rt.anchoredPosition = new Vector2(0, enemyHeight / 2); // Adjust as needed
+                    }
+                }
+            }
+
+            // Draw the ray in the scene view for debugging
+            Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red, 2.0f); // '2.0f' sets how long the ray is visible
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             string randomEnemy = Random.Range(1, 9).ToString();
-            Instantiate(Resources.Load<Actor>("Prefabs/Enemy" + randomEnemy), (gameObject.transform.position + new Vector3(1, 2, 0)), Quaternion.identity);
+            Instantiate(Resources.Load<Actor>("Prefabs/Enemy" + randomEnemy), (transform.position + new Vector3(1, 2, 0)), Quaternion.identity);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -306,8 +341,8 @@ public class PlayerScript : Actor
             animator.SetTrigger("Jump");
             rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Force);
         }
-
     }
+
 
     void handleMovementInput()
     {

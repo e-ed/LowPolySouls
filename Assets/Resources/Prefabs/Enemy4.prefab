@@ -261,11 +261,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6563661589076028428}
+  - {fileID: 2541201440846562967}
   m_Father: {fileID: 6782667309670242428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.028, y: -0.642}
+  m_AnchoredPosition: {x: 0, y: -0.642}
   m_SizeDelta: {x: 888, y: 514}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1264064261409882199
@@ -884,6 +885,7 @@ MonoBehaviour:
   weaponDamage: 0
   weaponSpeed: 0
   isInPlayerInventory: 0
+  hasDealtDamage: 0
 --- !u!1 &3968441568344008036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,6 +1925,41 @@ Transform:
   - {fileID: 7122842641414310756}
   m_Father: {fileID: 6738931875430414165}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7126245864991328728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2541201440846562967}
+  m_Layer: 3
+  m_Name: TargetCircleSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2541201440846562967
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7126245864991328728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7658186498718857323}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 1.45}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7410032141928211452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,9 +2188,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.2048178
+  m_Height: 1.1513596
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5877732, z: 0}
+  m_Center: {x: 0, y: 0.61450326, z: 0}
 --- !u!54 &6490739703491653310
 Rigidbody:
   m_ObjectHideFlags: 0
