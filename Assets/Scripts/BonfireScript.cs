@@ -18,7 +18,7 @@ public class BonfireScript : MonoBehaviour
         if (other.gameObject.name.Equals("Player"))
         {
             // TODO: save player position
-            // inside player class?
+            // inside player class? then read from file
             // also add a panel to show bonfire lit
             fire.SetActive(true);
         }

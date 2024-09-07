@@ -3159,7 +3159,7 @@ MonoBehaviour:
   inventory: []
   rollStaminaCost: 20
   attackStaminaCost: 20
-  staminaGain: 7
+  staminaGain: 30
 --- !u!54 &5672465856872282949
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -6,13 +6,13 @@ using UnityEngine;
 public class PlayerStatsScript : MonoBehaviour
 {
     TextMeshProUGUI[] textMeshProUGUIs;
-    Actor player;
+    PlayerScript player;
 
     
 
     void Awake()
     {
-        player = GameObject.Find("Player").GetComponent<Actor>();
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();
         textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
     }
 
@@ -44,6 +44,9 @@ public class PlayerStatsScript : MonoBehaviour
                     break;
                 case "HP":
                     tmp.SetText("HP: " + player.CurrentHP.ToString());
+                    break;
+                case "Souls":
+                    tmp.SetText("Souls: " + player.Souls.ToString());
                     break;
             }
         }

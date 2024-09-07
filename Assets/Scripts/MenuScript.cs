@@ -14,6 +14,19 @@ public class MenuScript : MonoBehaviour
 
     public void handleExitButton()
     {
+        PlayerScript player = FindObjectOfType<PlayerScript>();
+        if (player != null)
+        {
+            // Create a new PlayerData object from the player's data
+            PlayerData data = new PlayerData(player);
+
+            // Save the player's data using DataHandler's singleton instance
+            DataHandler.Instance.SaveData(data);
+        }
+        else
+        {
+            Debug.LogError("Player object not found!");
+        }
         Application.Quit();
     }
 

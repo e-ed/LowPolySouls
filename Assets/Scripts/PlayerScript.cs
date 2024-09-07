@@ -25,6 +25,7 @@ public class PlayerScript : Actor
     public float staminaGain;
     private int souls;
     private TextMeshPro soulsText;
+    private DataHandler dataHandler;
 
     public int Souls
     {
@@ -48,7 +49,25 @@ public class PlayerScript : Actor
         Intelligence = 10;
         vcam = FindObjectOfType<CinemachineFreeLook>();
         cam = GameObject.Find("Camera").transform;
+        dataHandler = GetComponent<DataHandler>();
+        LoadPlayerData();
+    }
 
+    private void LoadPlayerData()
+    {
+        PlayerData data = DataHandler.Instance.LoadData();
+
+        if (data != null)
+        {
+            // Apply loaded data
+            transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
+            // You can also retrieve level, strength, etc.
+            Level = data.level;
+            Souls = data.souls;
+            Strength = data.strength;
+            Dexterity = data.dexterity;
+            Intelligence = data.intelligence;
+        }
     }
 
     private void updateSoulsPanel()
