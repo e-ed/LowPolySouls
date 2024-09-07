@@ -11,6 +11,8 @@ public class EnemyNavScript : MonoBehaviour
     Animator animator;
     public float cooldown;
     private float timeUntilNextAttack;
+    float distanceToPlayer = float.MaxValue;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,11 @@ public class EnemyNavScript : MonoBehaviour
 
         animator.SetFloat("Horizontal", speed);
 
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+        if (playerTransform != null)
+        {
+            distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        }
 
         if (distanceToPlayer > 10) return;
 

@@ -12,7 +12,6 @@ public class SoulsPanelScript : MonoBehaviour
     {
         soulsText = GetComponentInChildren<TextMeshProUGUI>();
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
-        soulsText.text = player.Souls.ToString();
     }
 
     void OnUpdateSoulsPanel(object souls)

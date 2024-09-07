@@ -40,10 +40,18 @@ public class DataHandler : MonoBehaviour
 
     public void SaveData(PlayerData data)
     {
+        if (string.IsNullOrEmpty(filePath))
+        {
+            Debug.LogError("File path is null or empty");
+            return;
+        }
+
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(filePath, json);
         Debug.Log("Data saved to " + filePath);
+        Debug.Log("Data saved:" + json);
     }
+
 
     public PlayerData LoadData()
     {
@@ -56,8 +64,27 @@ public class DataHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No save file found!");
-            return null;
+
+            PlayerData defaultData = new PlayerData
+            {
+                level = 1,
+                souls = 0,
+                strength = 10,
+                dexterity = 10,
+                intelligence = 10,
+                positionX = 2,
+                positionY = 2,
+                positionZ = 107
+            };
+
+            // Serialize the default data to JSON
+            string json = JsonUtility.ToJson(defaultData, true);
+
+            // Write the JSON to the file
+            File.WriteAllText(filePath, json);
+            Debug.Log("Default data created and saved to " + filePath);
+
+            return defaultData;
         }
     }
 }

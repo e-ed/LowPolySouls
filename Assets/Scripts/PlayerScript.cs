@@ -26,6 +26,9 @@ public class PlayerScript : Actor
     private int souls;
     private TextMeshPro soulsText;
     private DataHandler dataHandler;
+    public int jumpForce;
+    public delegate void DataLoadedHandler();
+    public static event DataLoadedHandler OnDataLoaded;
 
     public int Souls
     {
@@ -35,40 +38,41 @@ public class PlayerScript : Actor
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        //weaponSocket = GameObject.FindGameObjectsWithTag("WeaponSocket")[0];
-        MaxHP = 100;
-        CurrentHP = 100;
-        Level = 1;
-        Strength = 10;
-        Dexterity = 10;
-        Intelligence = 10;
-        vcam = FindObjectOfType<CinemachineFreeLook>();
-        cam = GameObject.Find("Camera").transform;
-        dataHandler = GetComponent<DataHandler>();
-        LoadPlayerData();
+        
     }
+
+
 
     private void LoadPlayerData()
     {
-        PlayerData data = DataHandler.Instance.LoadData();
-
-        if (data != null)
+        if (DataHandler.Instance != null)
         {
-            // Apply loaded data
-            transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
-            // You can also retrieve level, strength, etc.
-            Level = data.level;
-            Souls = data.souls;
-            Strength = data.strength;
-            Dexterity = data.dexterity;
-            Intelligence = data.intelligence;
+            PlayerData data = DataHandler.Instance.LoadData();
+            if (data != null)
+            {
+                // Apply loaded data
+                Level = data.level;
+                Souls = data.souls;
+                Strength = data.strength;
+                Dexterity = data.dexterity;
+                Intelligence = data.intelligence;
+                Vector3 newPosition = new Vector3(data.positionX, data.positionY, data.positionZ);
+                rb.MovePosition(newPosition);
+
+                EventManager.TriggerEvent("UpdateSoulsPanel", souls);
+            }
+            else
+            {
+                Debug.LogError("Loaded data is null");
+            }
+        }
+        else
+        {
+            Debug.LogError("DataHandler instance is null");
         }
     }
+
+
 
     private void updateSoulsPanel()
     {
@@ -104,6 +108,20 @@ public class PlayerScript : Actor
 
     private void Start()
     {
+
+        MaxHP = 100;
+        CurrentHP = 100;
+        audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        dataHandler = GetComponent<DataHandler>();
+        LoadPlayerData();
+        //weaponSocket = GameObject.FindGameObjectsWithTag("WeaponSocket")[0];
+        vcam = FindObjectOfType<CinemachineFreeLook>();
+        cam = GameObject.Find("Camera").transform;
+
         //inventory.Add((GameObject) Resources.Load("Low-Poly Weapons/Prefabs/Sword"));
         //inventory.Add((GameObject)Resources.Load("Low-Poly Weapons/Prefabs/Dagger"));
         //GameObject.Find("Player").GetComponent<PlayerScript>().inventory.Add((GameObject)Resources.Load("PurePoly/Free_Swords/Prefabs/PP_Sword_0222"));
@@ -118,6 +136,15 @@ public class PlayerScript : Actor
         handleTargetInput();
         handleCombatInput();
         handleStaminaGain();
+        handleUnstuckMe();
+    }
+
+    void handleUnstuckMe()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            rb.MovePosition(new Vector3(2, 2, 107));
+        }
     }
 
     private void FixedUpdate()
@@ -144,6 +171,11 @@ public class PlayerScript : Actor
             animator.SetBool("Block", false);
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            CurrentHP += 30;
+            animator.SetTrigger("Heal");
+        }
     }
 
     public void Block()
@@ -213,9 +245,10 @@ public class PlayerScript : Actor
             Instantiate(Resources.Load<Actor>("Prefabs/Enemy" + randomEnemy), (gameObject.transform.position + new Vector3(1, 2, 0)), Quaternion.identity);
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            rb.AddForce(new Vector3(0, 25, 0), ForceMode.Impulse);
+            animator.SetTrigger("Jump");
+            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Force);
         }
 
     }
