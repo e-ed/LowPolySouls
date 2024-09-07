@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerScript : Actor
@@ -29,11 +30,20 @@ public class PlayerScript : Actor
     public int jumpForce;
     public delegate void DataLoadedHandler();
     public static event DataLoadedHandler OnDataLoaded;
+    private bool hasDied = false;
+    private float rollCooldown = 0.6f; // Half a second cooldown
+    private float lastRollTime;
 
     public int Souls
     {
         get { return souls; }
         set { souls = value; }
+    }
+
+    public bool HasDied
+    {
+        get { return hasDied; }
+        set { hasDied = value; }
     }
 
     void Awake()
@@ -99,6 +109,46 @@ public class PlayerScript : Actor
     void OnEnable()
     {
         EventManager.StartListening("EnemyDied", OnEnemyDied);
+        EventManager.StartListening("PlayerDied", OnPlayerDied);
+    }
+
+    void OnPlayerDied(object obj)
+    {
+        if (!hasDied)
+        {
+            hasDied = true;
+            animator.SetTrigger("Dying");
+            Invoke("Respawn", 5f);  // Call Respawn after 5 seconds
+        }
+    }
+
+    private void Respawn()
+    {
+        Vector3 respawnPosition = new Vector3(2, 2, 107); // Define a method or variable to get respawn location
+        RespawnPlayer(respawnPosition);
+    }
+
+    private void RespawnPlayer(Vector3 respawnPosition)
+    {
+        rb.MovePosition(respawnPosition);
+        ResetPlayer();
+    }
+
+    private void ResetPlayer()
+    {
+        CurrentHP = MaxHP;
+        stamina = maxStamina;
+        hasDied = false;  // Player is no longer dead
+        //animator.SetBool("Block", false);  // Reset animation states if necessary
+        animator.SetTrigger("Respawn");  // Optionally play a respawn animation
+        rb.velocity = Vector3.zero;  // Stop any momentum the player had
+    }
+
+
+
+    private void LoadDungeonScene()
+    {
+        SceneManager.LoadScene("Dungeon");
     }
 
     void OnDisable()
@@ -132,11 +182,14 @@ public class PlayerScript : Actor
 
     void Update()
     {
+        handleUnstuckMe();
+
+        if (hasDied) return;
+
         handleRollInput();
         handleTargetInput();
         handleCombatInput();
         handleStaminaGain();
-        handleUnstuckMe();
     }
 
     void handleUnstuckMe()
@@ -149,14 +202,17 @@ public class PlayerScript : Actor
 
     private void FixedUpdate()
     {
+        if (hasDied) return;
         handleMovementInput();
     }
 
     void handleCombatInput()
     {
-        if (Input.GetMouseButtonDown(0) && (stamina > attackStaminaCost))
+        if (Input.GetMouseButtonDown(0))
         {
-            Attack();
+            if (stamina > attackStaminaCost) { 
+                Attack();
+            }
             stamina -= attackStaminaCost;
 
         }
@@ -257,7 +313,7 @@ public class PlayerScript : Actor
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
-
+        if (cam == null) return;
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
 
@@ -284,9 +340,9 @@ public class PlayerScript : Actor
 
     void handleRollInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (CanRoll() && Input.GetKeyDown(KeyCode.Space))
         {
-            if (isRolling || stamina < rollStaminaCost) return;
+            if (stamina < rollStaminaCost) return;
 
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
@@ -309,11 +365,17 @@ public class PlayerScript : Actor
             rb.AddForce(boostForce, ForceMode.Impulse);
 
             animator.SetTrigger("isRolling");
-            isRolling = true;
+            //isRolling = true;
             //isGrounded = false;
 
             stamina -= rollStaminaCost;
+            lastRollTime = Time.time;
         }
+    }
+
+    bool CanRoll()
+    {
+        return Time.time >= lastRollTime + rollCooldown;
     }
 
 
@@ -340,6 +402,16 @@ public class PlayerScript : Actor
     public float Stamina
     {
         get { return stamina; }
+    }
+
+    private void SetIsRollingBoolean()
+    {
+        isRolling = true;
+    }
+
+    private void SetIsRollingBooleanToFalse()
+    {
+        isRolling = false;
     }
 }
 

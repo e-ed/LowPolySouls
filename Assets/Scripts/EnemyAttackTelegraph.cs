@@ -26,10 +26,13 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        weapon = FindChildWithTag(animator.gameObject, "Weapon");
+        weapon.GetComponent<WeaponScript>().ResetDamageFlag();
         slowDown = 1.5f;
         timePassed = 0;
         animator.SetFloat("Telegraph", 0.1f);
         animator.gameObject.GetComponent<Actor>().isAttacking = true;
+
 
     }
 
@@ -42,7 +45,6 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
         } else
         {
             animator.SetFloat("Telegraph", 1);
-            weapon = FindChildWithTag(animator.gameObject, "Weapon");
             weapon.GetComponent<MeshCollider>().enabled = true;
         }
     }

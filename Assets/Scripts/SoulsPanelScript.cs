@@ -8,9 +8,13 @@ public class SoulsPanelScript : MonoBehaviour
     private TextMeshProUGUI soulsText;
     private PlayerScript player;
 
-    private void Start()
+    private void Awake()
     {
         soulsText = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
     }
 

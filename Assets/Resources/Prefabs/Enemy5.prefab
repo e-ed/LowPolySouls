@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: souls
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 509812679042287242, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: eb1c37be3610a9a41bc37f7b7d7a3a88, type: 2}
     - target: {fileID: 1030275230283731142, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

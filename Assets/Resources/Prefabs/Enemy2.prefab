@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: souls
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6745848289492029256, guid: 0a9058e0950f79e4b8a4946cbfaf2b04, type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: e0ba8855fbe3b5a4aacd3c6191461896, type: 2}
     - target: {fileID: 7593173590084808819, guid: 0a9058e0950f79e4b8a4946cbfaf2b04, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

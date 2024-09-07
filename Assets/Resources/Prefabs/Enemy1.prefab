@@ -6535,6 +6535,7 @@ MonoBehaviour:
   isRolling: 0
   hasDied: 0
   soulsDrop: 10
+  stats: {fileID: 11400000, guid: 58521d7a640d7854fa33fde8c726922f, type: 2}
 --- !u!195 &6916055410184343674
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -5,13 +5,14 @@ using UnityEngine;
 public class RollEnd : StateMachineBehaviour
 {
     AnimatorStateInfo animStateInfo;
-    public float NTime;
-    private Actor actor;
+    private float NTime;
+    private PlayerScript player;
+    private bool hasGrantedOneExtraRollThisTime;
 
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    //// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    
+
     //}
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,19 +21,34 @@ public class RollEnd : StateMachineBehaviour
 
         //animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         //NTime = animStateInfo.normalizedTime;
-        //if (NTime > 0.7f)
+        //// Set canRollAgain to true once the animation is 80% complete
+        //if (NTime >= 0.8f && !animator.gameObject.GetComponent<PlayerScript>().canRollAgain && !hasGrantedOneExtraRollThisTime)
         //{
-        //    //animator.gameObject.GetComponent<Actor>().isRolling = false;
+        //    Debug.Log("granting one extra roll at ntime" + NTime);
+        //    animator.gameObject.GetComponent<PlayerScript>().canRollAgain = true;
+        //    hasGrantedOneExtraRollThisTime = true;
         //}
 
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.gameObject.GetComponent<Actor>().isRolling = false;
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    PlayerScript player = animator.gameObject.GetComponent<PlayerScript>();
 
-    }
+    //    // Use stateInfo to directly get the state name, ensuring you're getting the current state
+    //    string currentStateName = stateInfo.IsName("RollForward") ? "RollForward" : stateInfo.shortNameHash.ToString();
+
+    //    Debug.Log("Exiting state: " + currentStateName);
+
+    //    // If the state isn't the RollForward animation, continue resetting
+    //    if (!currentStateName.Equals("RollForward"))
+    //    {
+    //        player.isRolling = false;
+    //        Debug.Log("Reset isRolling to false.");
+    //    }
+    //}
+
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

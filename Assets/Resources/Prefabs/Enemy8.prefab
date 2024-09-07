@@ -6371,6 +6371,7 @@ MonoBehaviour:
   isRolling: 0
   hasDied: 0
   soulsDrop: 15
+  stats: {fileID: 11400000, guid: d0df161e1b5f771489dae175c74144cc, type: 2}
 --- !u!82 &484249007643557461
 AudioSource:
   m_ObjectHideFlags: 0

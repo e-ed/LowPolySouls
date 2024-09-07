@@ -14,6 +14,15 @@ public class Billboard : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if (cam == null)
+        {
+            cam = GameObject.Find("Camera").transform;
+
+            if (cam == null)
+            {
+                return;
+            }
+        }
         Vector3 lookAtPos = transform.position + cam.forward;
         lookAtPos.y = transform.position.y; // Lock rotation around the Y-axis
         transform.LookAt(lookAtPos);

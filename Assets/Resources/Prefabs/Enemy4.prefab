@@ -2130,6 +2130,7 @@ MonoBehaviour:
   isRolling: 0
   hasDied: 0
   soulsDrop: 30
+  stats: {fileID: 11400000, guid: f695dd543524e4c4fba763fb0b601993, type: 2}
 --- !u!136 &3122485385440419135
 CapsuleCollider:
   m_ObjectHideFlags: 0

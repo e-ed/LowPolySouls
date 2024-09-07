@@ -6,6 +6,20 @@ public class EnemyScript : Actor
     public bool hasDied = false;
     AudioSource audioSource;
     public int soulsDrop;
+    public EnemyStats stats;
+
+
+
+    public void ApplyStats()
+    {
+        if (stats != null)
+        {
+            Level = stats.Level;
+            Strength = stats.Strength;
+            Dexterity = stats.Dexterity;
+            Intelligence = stats.Intelligence;
+        }
+    }
 
 
     void Awake()
@@ -23,7 +37,7 @@ public class EnemyScript : Actor
 
     void Start()
     {
-
+        ApplyStats();
     }
 
     private void Step()

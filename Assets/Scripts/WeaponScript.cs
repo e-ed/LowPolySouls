@@ -28,6 +28,8 @@ public class WeaponScript : MonoBehaviour
     private float damageCooldownTimer = 0.0f;
     private Boolean canPlayTakeDamageAnimation = true;
 
+    public bool hasDealtDamage = false;
+
     private void Update()
     {
 
@@ -46,21 +48,42 @@ public class WeaponScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject topMostParentOfAttackSource = findTopMostParent(gameObject);
-
         Actor attackTarget = other.gameObject.GetComponent<Actor>();
         Actor attackSource = topMostParentOfAttackSource.GetComponent<Actor>();
+
+        if (hasDealtDamage) return;
 
         if (attackTarget == null) return;
 
         if (attackTarget.isRolling) return;
 
-        int attackDamage = ((int)weaponDamage) + (attackSource.Strength * attackSource.Level) + UnityEngine.Random.Range(0, attackSource.Level);
+        if (!attackSource.name.Equals("Player") && attackTarget.name.Equals("Player")) {
+
+            hasDealtDamage = true;
+        }
+
+
+        int attackDamage = ((int)weaponDamage) + (attackSource.Strength * attackSource.Level) + UnityEngine.Random.Range(0, attackSource.Level + 5);
+        //int baseDamage = (int)weaponDamage + (attackSource.Strength * attackSource.Level);
+        //int randomDamageModifier = UnityEngine.Random.Range(-attackSource.Level, attackSource.Level * 2);
+        //float criticalMultiplier = UnityEngine.Random.Range(0.8f, 1.5f);  // Random multiplier for extra damage variability
+
+        //// Calculate final damage
+        //int attackDamage = (int) Math.Round((baseDamage + randomDamageModifier) * criticalMultiplier);
+
         bool isCritical = UnityEngine.Random.Range(0, 100) < 30;
-        if (isCritical) attackDamage *= 3;
+        if (isCritical) attackDamage *= 2;
 
         attackTarget.CurrentHP -= attackDamage;
 
-        if (attackTarget.CurrentHP < 0) attackTarget.CurrentHP = 0;
+        if (attackTarget.CurrentHP < 0)
+        {
+            if (attackTarget.name.Equals("Player"))
+            {
+                EventManager.TriggerEvent("PlayerDied", null);
+            }
+            attackTarget.CurrentHP = 0;
+        }
 
         InstantiateDamagePopup(attackDamage, isCritical, attackTarget);
 
@@ -121,5 +144,10 @@ public class WeaponScript : MonoBehaviour
             Destroy(dynamicDamagePopup, 1.5f);
 
         }
+    }
+
+    public void ResetDamageFlag()
+    {
+        hasDealtDamage = false;
     }
 }

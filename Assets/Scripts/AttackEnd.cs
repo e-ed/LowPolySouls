@@ -6,6 +6,7 @@ public class AttackEnd : StateMachineBehaviour
     private GameObject weaponSocket;
     private float weaponSpeed;
     private int previousStateHash;
+    public bool canRollAgain;
     public void OnEnable()
     {
         weaponSocket = GameObject.FindGameObjectWithTag("WeaponSocket");
