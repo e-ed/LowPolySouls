@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth;
     public int health;
     public Slider healthBarSlider;
     Actor currentActor;
@@ -49,8 +49,16 @@ public class HealthBar : MonoBehaviour
             //}
             //else
             //{
-                easeHealthSlider = transform.GetChild(0).GetComponent<Slider>();
-                healthBarSlider = transform.GetChild(1).GetComponent<Slider>();
+            easeHealthSlider = transform.GetChild(0).GetComponent<Slider>();
+            healthBarSlider = transform.GetChild(1).GetComponent<Slider>();
+
+            healthBarSlider.maxValue = currentActor.MaxHP;
+            healthBarSlider.value = currentActor.MaxHP;
+            easeHealthSlider.maxValue = currentActor.MaxHP;
+            easeHealthSlider.value = currentActor.MaxHP;
+
+
+
             //}
         }
         else

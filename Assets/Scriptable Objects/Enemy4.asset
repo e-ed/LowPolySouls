@@ -16,3 +16,4 @@ MonoBehaviour:
   Strength: 11
   Dexterity: 4
   Intelligence: 5
+  MaxHP: 100

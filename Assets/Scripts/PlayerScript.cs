@@ -59,7 +59,8 @@ public class PlayerScript : Actor
 
     public int GetXPRequiredForLevel()
     {
-        return Mathf.RoundToInt(baseXP * Mathf.Pow(gameObject.GetComponent<PlayerScript>().Level, exponent));
+        Debug.Log("Level: " + Level);
+        return Mathf.RoundToInt(baseXP * Mathf.Pow(player.Level, exponent));
     }
 
     public bool canPlayerLevelUp()
@@ -529,8 +530,9 @@ public class PlayerScript : Actor
         MaxHP = 80 + (Strength * 2); 
     }
 
-    public void decreaseSouls()
+    public void levelUpAndDecreaseSouls()
     {
+        player.Level++;
         Souls -= GetXPRequiredForLevel();
     }
 }

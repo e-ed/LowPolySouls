@@ -18,26 +18,22 @@ public class EnemyScript : Actor
             Strength = stats.Strength;
             Dexterity = stats.Dexterity;
             Intelligence = stats.Intelligence;
+            MaxHP = stats.MaxHP;
+            CurrentHP = MaxHP;
         }
     }
 
 
     void Awake()
     {
-        MaxHP = 100;
-        CurrentHP = 100;
-        Level = 1;
-        Strength = 3;
-        Dexterity = 3;
-        Intelligence = 3;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        ApplyStats();
 
     }
 
     void Start()
     {
-        ApplyStats();
     }
 
     private void Step()

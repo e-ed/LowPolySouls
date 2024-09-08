@@ -44,6 +44,11 @@ public class LevelUpPanel : MonoBehaviour
                 case "Intelligence":
                     tmp.SetText("Intelligence: " + player.Intelligence.ToString());
                     break;
+                case "Souls needed":
+                    tmp.SetText("Souls needed: " + player.GetXPRequiredForLevel());
+                    break;
+
+
 
 
             }

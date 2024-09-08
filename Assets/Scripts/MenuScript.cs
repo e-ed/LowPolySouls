@@ -47,6 +47,7 @@ public class MenuScript : MonoBehaviour
             {
                 levelUpPanel.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 vcam.enabled = true;
                 Time.timeScale = 1;
                 return;
@@ -95,7 +96,7 @@ public class MenuScript : MonoBehaviour
         if (player.canPlayerLevelUp())
         {
             player.IncreaseStrength();
-            player.decreaseSouls();
+            player.levelUpAndDecreaseSouls();
             EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
             EventManager.TriggerEvent("UpdateLevelUpPanel", null);
 
@@ -103,18 +104,24 @@ public class MenuScript : MonoBehaviour
     }
     public void handleLevelUpDexterityButton()
     {
-        player.IncreaseDexterity();
-        player.decreaseSouls();
-        EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
-        EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+        if (player.canPlayerLevelUp())
+        {
+            player.IncreaseDexterity();
+            player.levelUpAndDecreaseSouls();
+            EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
+            EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+        }
     }
 
     public void handleLevelUpIntelligenceButton()
     {
-        player.IncreaseIntelligence();
-        player.decreaseSouls();
-        EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
-        EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+        if (player.canPlayerLevelUp())
+        {
+            player.IncreaseIntelligence();
+            player.levelUpAndDecreaseSouls();
+            EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
+            EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+        }
     }
 
 

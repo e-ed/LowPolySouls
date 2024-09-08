@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Enemy7
   m_EditorClassIdentifier: 
   Level: 2
-  Strength: 11
-  Dexterity: 4
+  Strength: 13
+  Dexterity: 6
   Intelligence: 5
+  MaxHP: 350

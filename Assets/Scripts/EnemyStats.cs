@@ -7,4 +7,5 @@ public class EnemyStats : ScriptableObject
     public int Strength;
     public int Dexterity;
     public int Intelligence;
+    public int MaxHP;
 }
