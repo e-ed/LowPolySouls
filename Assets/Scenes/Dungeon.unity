@@ -3903,7 +3903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180113254}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31117544, y: 0.000000051412915, z: -0.000000016834212, w: 0.9503525}
+  m_LocalRotation: {x: 0.30169475, y: 0.000000011329973, z: -0.0000000035852492, w: 0.9534046}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4277,8 +4277,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193449507}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31117547, y: 0.000000051412915, z: -0.000000016834214, w: 0.9503525}
-  m_LocalPosition: {x: 2.0199997, y: 5.540147, z: 103.981735}
+  m_LocalRotation: {x: 0.30169475, y: -0.0000000021522568, z: 6.8105793e-10, w: 0.9534046}
+  m_LocalPosition: {x: 2.0199997, y: 5.4849305, z: 103.92149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21492,7 +21492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050614506}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27349007, y: 0.00000003548587, z: -0.000000010089705, w: 0.96187484}
+  m_LocalRotation: {x: 0.26389644, y: 0.000000034933326, z: -0.000000009557588, w: 0.96455103}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24773,6 +24773,7 @@ MonoBehaviour:
   playerStats: {fileID: 1124979419}
   vcam: {fileID: 1217051547}
   levelUpPanel: {fileID: 1072982482}
+  player: {fileID: 1582792207}
 --- !u!4 &1177868569
 Transform:
   m_ObjectHideFlags: 0
@@ -30019,7 +30020,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393910204}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29236022, y: 0.000000018825903, z: -0.0000000057554086, w: 0.9563083}
+  m_LocalRotation: {x: 0.2828211, y: 0.00000001823465, z: -0.0000000053766587, w: 0.9591727}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -33788,6 +33789,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45b7013e92d1f024eabb9aef21a16335, type: 3}
+--- !u!114 &1582792207 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5019940951406741560, guid: 45b7013e92d1f024eabb9aef21a16335, type: 3}
+  m_PrefabInstance: {fileID: 1582792206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b5bd999a5a32d44d84b5d0a0b77a903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1584089178 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8472427409972639769, guid: fe7a1c74587ac614790d0638b1873ba1, type: 3}

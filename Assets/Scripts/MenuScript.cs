@@ -9,12 +9,7 @@ public class MenuScript : MonoBehaviour
     public GameObject playerStats;
     public CinemachineFreeLook vcam;
     public GameObject levelUpPanel;
-    PlayerScript player;
-
-    private void Start()
-    {
-        player = GameObject.Find("Player").GetComponent<PlayerScript>();
-    }
+    public PlayerScript player;
 
     public void handlePlayButton()
     {

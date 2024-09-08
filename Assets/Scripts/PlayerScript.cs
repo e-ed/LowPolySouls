@@ -83,6 +83,8 @@ public class PlayerScript : Actor
                 Strength = data.strength;
                 Dexterity = data.dexterity;
                 Intelligence = data.intelligence;
+                setMaxHp();
+                CurrentHP = MaxHP;
                 Vector3 newPosition = new Vector3(data.positionX, data.positionY, data.positionZ);
                 rb.MovePosition(newPosition);
 
@@ -177,16 +179,13 @@ public class PlayerScript : Actor
     private void Start()
     {
         player = gameObject.GetComponent<PlayerScript>();
-
-        MaxHP = 100;
-        CurrentHP = 100;
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        LoadPlayerData();
         animator = GetComponent<Animator>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         dataHandler = GetComponent<DataHandler>();
-        LoadPlayerData();
         //weaponSocket = GameObject.FindGameObjectsWithTag("WeaponSocket")[0];
         vcam = FindObjectOfType<CinemachineFreeLook>();
         cam = GameObject.Find("Camera").transform;
@@ -527,13 +526,14 @@ public class PlayerScript : Actor
 
     private void setMaxHp()
     {
-        MaxHP = 80 + (Strength * 2); 
+        MaxHP = 80 + (Strength * 2);
+        EventManager.TriggerEvent("SetMaxHp", null);
     }
 
     public void levelUpAndDecreaseSouls()
     {
-        player.Level++;
         Souls -= GetXPRequiredForLevel();
+        player.Level++;
     }
 }
 

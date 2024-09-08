@@ -12,6 +12,67 @@ public class HealthBar : MonoBehaviour
     private float lerpDuration = 1.5f;  // Adjust this value as needed
     private Coroutine lerpCoroutine;
 
+    private void OnEnable()
+    {
+        EventManager.StartListening("SetMaxHp", OnSetMaxHp);
+    }
+
+    void OnSetMaxHp(object obj)
+    {
+        Transform currentParent = transform.parent;
+
+        while (currentParent != null)
+        {
+            Transform nextParent = currentParent.parent;
+
+            if (nextParent != null)
+            {
+                currentParent = nextParent;
+            }
+            else
+            {
+                GameObject topmostParent = currentParent.gameObject;
+
+                if (topmostParent.name == "Canvas")
+                {
+                    currentActor = GameObject.Find("Player").GetComponent<Actor>();
+                }
+                else
+                {
+                    currentActor = topmostParent.GetComponent<Actor>();
+                }
+
+                break;
+            }
+        }
+
+        if (currentActor != null)
+        {
+            //if (currentActor.name == "Player")
+            //{
+            //    healthBarSlider = GetComponent<Slider>();
+            //}
+            //else
+            //{
+            easeHealthSlider = transform.GetChild(0).GetComponent<Slider>();
+            healthBarSlider = transform.GetChild(1).GetComponent<Slider>();
+
+            healthBarSlider.maxValue = currentActor.MaxHP;
+            healthBarSlider.value = currentActor.MaxHP;
+            easeHealthSlider.maxValue = currentActor.MaxHP;
+            easeHealthSlider.value = currentActor.MaxHP;
+
+
+
+            //}
+        }
+        else
+        {
+            Debug.LogError("Actor component not found in any parent GameObject.");
+        }
+
+    }
+
     void Start()
     {
         Transform currentParent = transform.parent;
