@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-public class PlayerStatsScript : MonoBehaviour
+
+public class LevelUpPanel : MonoBehaviour
 {
     TextMeshProUGUI[] textMeshProUGUIs;
     PlayerScript player;
 
-    
+
 
     void Awake()
     {
@@ -17,6 +18,13 @@ public class PlayerStatsScript : MonoBehaviour
     }
 
     private void OnEnable()
+    {
+        updateStatsText(textMeshProUGUIs);
+        EventManager.StartListening("UpdateLevelUpPanel", OnUpdateLevelUpPanel);
+
+    }
+
+    void OnUpdateLevelUpPanel(object obj)
     {
         updateStatsText(textMeshProUGUIs);
     }
@@ -36,25 +44,9 @@ public class PlayerStatsScript : MonoBehaviour
                 case "Intelligence":
                     tmp.SetText("Intelligence: " + player.Intelligence.ToString());
                     break;
-                case "Level":
-                    tmp.SetText("Level: " + player.Level.ToString());
-                    break;
-                case "Max HP":
-                    tmp.SetText("Max HP: " + player.MaxHP.ToString());
-                    break;
-                case "HP":
-                    tmp.SetText("HP: " + player.CurrentHP.ToString());
-                    break;
-                case "Souls":
-                    tmp.SetText("Souls: " + player.Souls.ToString());
-                    break;
-                case "Souls needed":
-                    tmp.SetText("Souls needed: " + player.GetXPRequiredForLevel().ToString());
-                    break;
+
 
             }
         }
     }
-
-
 }

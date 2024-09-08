@@ -37,6 +37,13 @@ public class PlayerScript : Actor
     GameObject currentTarget;
     public float rayDistance;
     float enemyHeight;
+    Transform playerNeck;
+    private CenterCamera followRecenter;
+    public int baseXP = 10;
+    public float exponent = 1.7f;
+    PlayerScript player;
+    public GameObject levelUpPanel;
+
 
     public int Souls
     {
@@ -50,9 +57,14 @@ public class PlayerScript : Actor
         set { hasDied = value; }
     }
 
-    void Awake()
+    public int GetXPRequiredForLevel()
     {
+        return Mathf.RoundToInt(baseXP * Mathf.Pow(gameObject.GetComponent<PlayerScript>().Level, exponent));
+    }
 
+    public bool canPlayerLevelUp()
+    {
+        return souls > GetXPRequiredForLevel();
     }
 
 
@@ -163,6 +175,7 @@ public class PlayerScript : Actor
 
     private void Start()
     {
+        player = gameObject.GetComponent<PlayerScript>();
 
         MaxHP = 100;
         CurrentHP = 100;
@@ -177,6 +190,9 @@ public class PlayerScript : Actor
         vcam = FindObjectOfType<CinemachineFreeLook>();
         cam = GameObject.Find("Camera").transform;
         targetCircle = (GameObject)Resources.Load("Target Circle");
+        playerNeck = GameObject.FindWithTag("Neck").transform;
+        followRecenter = vcam.GetComponent<CenterCamera>();
+
 
         //inventory.Add((GameObject) Resources.Load("Low-Poly Weapons/Prefabs/Sword"));
         //inventory.Add((GameObject)Resources.Load("Low-Poly Weapons/Prefabs/Dagger"));
@@ -214,6 +230,11 @@ public class PlayerScript : Actor
 
     void handleCombatInput()
     {
+        if (levelUpPanel.activeSelf)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (stamina > attackStaminaCost)
@@ -237,6 +258,10 @@ public class PlayerScript : Actor
         if (Input.GetKeyDown(KeyCode.R))
         {
             CurrentHP += 30;
+            if (CurrentHP > MaxHP)
+            {
+                CurrentHP = MaxHP;
+            }
             animator.SetTrigger("Heal");
         }
     }
@@ -255,13 +280,25 @@ public class PlayerScript : Actor
 
     private void resetTarget()
     {
+        vcam.m_YAxis.m_MaxSpeed = 0.05f;
+        vcam.m_XAxis.m_MaxSpeed = 3;
+
         hasTarget = false;
-        vcam.LookAt = gameObject.transform;
-        // vcam.Follow = gameObject.transform;
-        vcam.m_Orbits[0].m_Radius = 8;
-        vcam.m_Orbits[1].m_Radius = 7;
-        vcam.m_Orbits[2].m_Radius = 6.5f;
+        //vcam.GetComponent<CinemachineTargetGroup>().RemoveMember(enemyTarget.transform);
+        vcam.LookAt = playerNeck;
+        //vcam.Follow = gameObject.transform;
+        vcam.m_Orbits[0].m_Radius = 6;
+        vcam.m_Orbits[1].m_Radius = 5;
+        vcam.m_Orbits[2].m_Radius = 4.5f;
         Destroy(currentTarget);
+    }
+
+    void RecenterCamera()
+    {
+        if (followRecenter != null)
+        {
+            followRecenter.Recenter = true; // This will start the recentering process
+        }
     }
 
     void handleTargetInput()
@@ -273,6 +310,20 @@ public class PlayerScript : Actor
 
         if (hasTarget)
         {
+            //Ray ray = new Ray(vcam.transform.position+new Vector3(0, 0, -1f), vcam.transform.forward);
+            //LayerMask layerMask = LayerMask.GetMask("Player", "Enemy");
+            //RaycastHit[] hits = Physics.RaycastAll(ray, 50f, layerMask);
+
+            //// Iterate over each hit object
+            //foreach (RaycastHit hit in hits)
+            //{
+            //    Debug.Log("Hit: " + hit.collider.name);
+            //    // Do something with each hit, like applying damage or effects
+            //}
+
+            //Debug.DrawRay(vcam.transform.position, vcam.transform.forward, Color.red, 2.0f); // '2.0f' sets how long the ray is visible
+
+            // RecenterCamera();
             // Update position based on the enemy's height
             //RectTransform rt = currentTarget.GetComponent<RectTransform>();
             //float offsetY = enemyHeight - 0.25f; // Adjust as needed
@@ -299,8 +350,13 @@ public class PlayerScript : Actor
                 hasTarget = true;
                 enemyTarget = hit.collider.gameObject;
 
-                vcam.LookAt = enemyTarget.transform;
+                //vcam.GetComponent<CinemachineTargetGroup>().AddMember(enemyTarget.transform, 2, 0);
+                //vcam.Follow = vcam.GetComponent<CinemachineTargetGroup>().m_Target;
+                //vcam.m_XAxis.m_MaxSpeed = 0;
+                vcam.m_YAxis.m_MaxSpeed = 0;
+
                 //vcam.Follow = enemyTarget.transform;
+                vcam.LookAt = enemyTarget.transform;
 
                 Collider enemyCollider = enemyTarget.GetComponent<Collider>();
 
@@ -348,6 +404,7 @@ public class PlayerScript : Actor
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
+
         if (cam == null) return;
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
@@ -371,6 +428,8 @@ public class PlayerScript : Actor
         {
             transform.rotation = Quaternion.LookRotation(inputDir);
         }
+
+        //vcam.m_XAxis.Value -= (horizontalInput*5);
     }
 
     void handleRollInput()
@@ -447,6 +506,32 @@ public class PlayerScript : Actor
     private void SetIsRollingBooleanToFalse()
     {
         isRolling = false;
+    }
+
+    public void IncreaseStrength()
+    {
+        player.Strength++;
+        setMaxHp();
+    }
+
+    public void IncreaseDexterity()
+    {
+        player.Dexterity++;
+    }
+
+    public void IncreaseIntelligence()
+    {
+        player.Intelligence++;
+    }
+
+    private void setMaxHp()
+    {
+        MaxHP = 80 + (Strength * 2); 
+    }
+
+    public void decreaseSouls()
+    {
+        Souls -= GetXPRequiredForLevel();
     }
 }
 

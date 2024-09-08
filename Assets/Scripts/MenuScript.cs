@@ -1,4 +1,5 @@
 using Cinemachine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour
@@ -7,6 +8,14 @@ public class MenuScript : MonoBehaviour
     public GameObject panel;
     public GameObject playerStats;
     public CinemachineFreeLook vcam;
+    public GameObject levelUpPanel;
+    PlayerScript player;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();
+    }
+
     public void handlePlayButton()
     {
         SceneManager.LoadScene("Dungeon");
@@ -32,21 +41,35 @@ public class MenuScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "Menu")
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Cursor.visible = !Cursor.visible;
-            panel.SetActive(!panel.activeSelf);
-            if (panel.activeSelf)
+            if (levelUpPanel.activeSelf)
             {
-                Cursor.lockState = CursorLockMode.Confined;
-                vcam.enabled = false;
-                Time.timeScale = 0;
-            } else
-            {
+                levelUpPanel.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 vcam.enabled = true;
                 Time.timeScale = 1;
+                return;
+            }
 
+            if (SceneManager.GetActiveScene().name != "Menu")
+            {
+
+                Cursor.visible = !Cursor.visible;
+                panel.SetActive(!panel.activeSelf);
+                if (panel.activeSelf)
+                {
+                    Cursor.lockState = CursorLockMode.Confined;
+                    vcam.enabled = false;
+                    Time.timeScale = 0;
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    vcam.enabled = true;
+                    Time.timeScale = 1;
+
+                }
             }
         } else if (Input.GetKeyDown(KeyCode.C))
         {
@@ -66,5 +89,33 @@ public class MenuScript : MonoBehaviour
             }
         }
     }
-    
+
+    public void handleLevelUpStrengthButton()
+    {
+        if (player.canPlayerLevelUp())
+        {
+            player.IncreaseStrength();
+            player.decreaseSouls();
+            EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
+            EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+
+        }
+    }
+    public void handleLevelUpDexterityButton()
+    {
+        player.IncreaseDexterity();
+        player.decreaseSouls();
+        EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
+        EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+    }
+
+    public void handleLevelUpIntelligenceButton()
+    {
+        player.IncreaseIntelligence();
+        player.decreaseSouls();
+        EventManager.TriggerEvent("UpdateSoulsPanel", player.Souls);
+        EventManager.TriggerEvent("UpdateLevelUpPanel", null);
+    }
+
+
 }
