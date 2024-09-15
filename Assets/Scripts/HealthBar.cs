@@ -14,63 +14,18 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.StartListening("SetMaxHp", OnSetMaxHp);
+        EventManager.StartListening("SetMaxHp", OnSetMaxHP);
     }
 
-    void OnSetMaxHp(object obj)
+    void OnSetMaxHP(object obj)
     {
-        Transform currentParent = transform.parent;
-
-        while (currentParent != null)
+        if (currentActor != null && currentActor.name.Equals("Player"))
         {
-            Transform nextParent = currentParent.parent;
-
-            if (nextParent != null)
-            {
-                currentParent = nextParent;
-            }
-            else
-            {
-                GameObject topmostParent = currentParent.gameObject;
-
-                if (topmostParent.name == "Canvas")
-                {
-                    currentActor = GameObject.Find("Player").GetComponent<Actor>();
-                }
-                else
-                {
-                    currentActor = topmostParent.GetComponent<Actor>();
-                }
-
-                break;
-            }
-        }
-
-        if (currentActor != null)
-        {
-            //if (currentActor.name == "Player")
-            //{
-            //    healthBarSlider = GetComponent<Slider>();
-            //}
-            //else
-            //{
-            easeHealthSlider = transform.GetChild(0).GetComponent<Slider>();
-            healthBarSlider = transform.GetChild(1).GetComponent<Slider>();
-
             healthBarSlider.maxValue = currentActor.MaxHP;
             healthBarSlider.value = currentActor.MaxHP;
             easeHealthSlider.maxValue = currentActor.MaxHP;
             easeHealthSlider.value = currentActor.MaxHP;
-
-
-
-            //}
         }
-        else
-        {
-            Debug.LogError("Actor component not found in any parent GameObject.");
-        }
-
     }
 
     void Start()
@@ -118,8 +73,6 @@ public class HealthBar : MonoBehaviour
             easeHealthSlider.maxValue = currentActor.MaxHP;
             easeHealthSlider.value = currentActor.MaxHP;
 
-
-
             //}
         }
         else
@@ -144,8 +97,6 @@ public class HealthBar : MonoBehaviour
                 lerpCoroutine = StartCoroutine(LerpEaseHealth(healthBarSlider.value));
             }
         }
-
-
 
     }
 

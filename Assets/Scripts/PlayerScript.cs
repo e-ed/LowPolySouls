@@ -79,12 +79,12 @@ public class PlayerScript : Actor
             {
                 // Apply loaded data
                 Level = data.level;
-                Souls = data.souls;
                 Strength = data.strength;
-                Dexterity = data.dexterity;
-                Intelligence = data.intelligence;
                 setMaxHp();
                 CurrentHP = MaxHP;
+                Dexterity = data.dexterity;
+                Intelligence = data.intelligence;
+                Souls = data.souls;
                 Vector3 newPosition = new Vector3(data.positionX, data.positionY, data.positionZ);
                 rb.MovePosition(newPosition);
 
@@ -179,7 +179,6 @@ public class PlayerScript : Actor
     private void Start()
     {
         player = gameObject.GetComponent<PlayerScript>();
-        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         LoadPlayerData();
         animator = GetComponent<Animator>();
@@ -192,6 +191,7 @@ public class PlayerScript : Actor
         targetCircle = (GameObject)Resources.Load("Target Circle");
         playerNeck = GameObject.FindWithTag("Neck").transform;
         followRecenter = vcam.GetComponent<CenterCamera>();
+        audioSource = GetComponent<AudioSource>();
 
 
         //inventory.Add((GameObject) Resources.Load("Low-Poly Weapons/Prefabs/Sword"));
