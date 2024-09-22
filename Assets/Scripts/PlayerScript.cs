@@ -32,7 +32,7 @@ public class PlayerScript : Actor
     public static event DataLoadedHandler OnDataLoaded;
     private bool hasDied = false;
     private float rollCooldown = 0.6f; // Half a second cooldown
-    private float lastRollTime;
+    public float lastRollTime;
     GameObject targetCircle;
     GameObject currentTarget;
     public float rayDistance;
@@ -251,7 +251,7 @@ public class PlayerScript : Actor
                 // doing it inside animator instead
                 // to avoid "false positives" with attack
                 //stamina -= attackStaminaCost;
-                rb.velocity = Vector3.zero;
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
             }
 
         }
@@ -404,7 +404,7 @@ public class PlayerScript : Actor
             Instantiate(Resources.Load<Actor>("Prefabs/Enemy" + randomEnemy), (transform.position + new Vector3(1, 2, 0)), Quaternion.identity);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isRolling)
         {
             animator.SetTrigger("Jump");
             rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Force);
@@ -450,32 +450,31 @@ public class PlayerScript : Actor
         {
             if (stamina < rollStaminaCost) return;
 
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
+            //float horizontalInput = Input.GetAxisRaw("Horizontal");
+            //float verticalInput = Input.GetAxisRaw("Vertical");
 
-            Vector3 camForward = cam.forward;
-            Vector3 camRight = cam.right;
+            //Vector3 camForward = cam.forward;
+            //Vector3 camRight = cam.right;
 
-            camForward.y = 0;
-            camRight.y = 0;
+            //camForward.y = 0;
+            //camRight.y = 0;
 
-            Vector3 forwardRelative = verticalInput * camForward;
-            Vector3 rightRelative = horizontalInput * camRight;
-            Vector3 movementDirection = forwardRelative + rightRelative;
+            //Vector3 forwardRelative = verticalInput * camForward;
+            //Vector3 rightRelative = horizontalInput * camRight;
+            //Vector3 movementDirection = forwardRelative + rightRelative;
 
-            Vector3 inputDir = new Vector3(movementDirection.x, 0f, movementDirection.z).normalized;
+            //Vector3 inputDir = new Vector3(movementDirection.x, 0f, movementDirection.z).normalized;
 
 
-            // Add a boost in the direction of the input while rolling
-            Vector3 boostForce = inputDir * rollSpeed;
-            rb.AddForce(boostForce, ForceMode.Impulse);
+            //// Add a boost in the direction of the input while rolling
+            //Vector3 boostForce = inputDir * rollSpeed;
+            //rb.AddForce(boostForce, ForceMode.Impulse);
 
             animator.SetTrigger("isRolling");
             //isRolling = true;
             //isGrounded = false;
 
-            stamina -= rollStaminaCost;
-            lastRollTime = Time.time;
+            
         }
     }
 

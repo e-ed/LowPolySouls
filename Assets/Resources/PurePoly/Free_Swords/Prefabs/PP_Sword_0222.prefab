@@ -124,3 +124,4 @@ MonoBehaviour:
   weaponDamage: 20
   weaponSpeed: 0.6
   isInPlayerInventory: 0
+  hasDealtDamage: 0

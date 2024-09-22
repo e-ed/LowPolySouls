@@ -100,10 +100,10 @@ public class AttackEnd : StateMachineBehaviour
         Actor currentActor = animator.gameObject.GetComponent<Actor>();
 
 
-        if (string.IsNullOrEmpty(currentStateName))
-        {
-            return;
-        }
+        //if (string.IsNullOrEmpty(currentStateName))
+        //{
+        //    return;
+        //}
 
         collider.enabled = false;
         currentActor.isAttacking = false;
