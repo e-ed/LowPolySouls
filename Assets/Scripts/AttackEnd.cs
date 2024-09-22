@@ -7,9 +7,14 @@ public class AttackEnd : StateMachineBehaviour
     private float weaponSpeed;
     private int previousStateHash;
     public bool canRollAgain;
+    public GameObject playerGameObject;
+    private PlayerScript player;
     public void OnEnable()
     {
         weaponSocket = GameObject.FindGameObjectWithTag("WeaponSocket");
+        playerGameObject = GameObject.Find("Player");
+        player = playerGameObject.GetComponent<PlayerScript>();
+
     }
 
     // Function to find a child with a specific tag
@@ -31,6 +36,7 @@ public class AttackEnd : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        player.Stamina -= player.attackStaminaCost;
         animator.gameObject.GetComponent<PlayerScript>().isAttacking = true;
         previousStateHash = animator.GetCurrentAnimatorStateInfo(layerIndex).shortNameHash;
 

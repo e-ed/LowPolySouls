@@ -57,9 +57,14 @@ public class PlayerScript : Actor
         set { hasDied = value; }
     }
 
+    public float Stamina
+    {
+        get { return stamina; }
+        set { stamina = value; }
+    }
+
     public int GetXPRequiredForLevel()
     {
-        Debug.Log("Level: " + Level);
         return Mathf.RoundToInt(baseXP * Mathf.Pow(player.Level, exponent));
     }
 
@@ -224,7 +229,7 @@ public class PlayerScript : Actor
 
     private void FixedUpdate()
     {
-        if (hasDied) return;
+        if (isAttacking || animator.GetBool("Block") || hasDied) return;
         handleMovementInput();
     }
 
@@ -240,8 +245,11 @@ public class PlayerScript : Actor
             if (stamina > attackStaminaCost)
             {
                 Attack();
+                // doing it inside animator instead
+                // to avoid "false positives" with attack
+                //stamina -= attackStaminaCost;
+                rb.velocity = Vector3.zero;
             }
-            stamina -= attackStaminaCost;
 
         }
 
@@ -268,6 +276,7 @@ public class PlayerScript : Actor
 
     public void Block()
     {
+        rb.velocity = Vector3.zero;
         animator.SetBool("Block", true);
     }
 
@@ -491,11 +500,6 @@ public class PlayerScript : Actor
         {
             stamina += staminaGain * Time.deltaTime;
         }
-    }
-
-    public float Stamina
-    {
-        get { return stamina; }
     }
 
     private void SetIsRollingBoolean()
