@@ -245,7 +245,7 @@ public class PlayerScript : Actor
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (stamina > attackStaminaCost && !isRolling)
+            if (stamina > attackStaminaCost)
             {
                 Attack();
                 // doing it inside animator instead
@@ -448,7 +448,7 @@ public class PlayerScript : Actor
     {
         if (CanRoll() && Input.GetKeyDown(KeyCode.Space))
         {
-            if (stamina < rollStaminaCost || animator.GetBool("isAttacking")) return;
+            if (stamina < rollStaminaCost) return;
 
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
