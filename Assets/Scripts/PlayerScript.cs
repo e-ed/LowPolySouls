@@ -43,6 +43,9 @@ public class PlayerScript : Actor
     public float exponent = 1.7f;
     PlayerScript player;
     public GameObject levelUpPanel;
+    public int flaskCharges = 10;
+    public TextMeshProUGUI charges;
+    public bool isHealing;
 
 
     public int Souls
@@ -229,7 +232,7 @@ public class PlayerScript : Actor
 
     private void FixedUpdate()
     {
-        if (isAttacking || animator.GetBool("Block") || hasDied) return;
+        if (isAttacking || animator.GetBool("Block") || isHealing ||  hasDied) return;
         handleMovementInput();
     }
 
@@ -242,7 +245,7 @@ public class PlayerScript : Actor
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (stamina > attackStaminaCost)
+            if (stamina > attackStaminaCost && !isRolling)
             {
                 Attack();
                 // doing it inside animator instead
@@ -265,10 +268,10 @@ public class PlayerScript : Actor
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            CurrentHP += 30;
-            if (CurrentHP > MaxHP)
+            if (flaskCharges < 1)
             {
-                CurrentHP = MaxHP;
+                flaskCharges = 0;
+                return;
             }
             animator.SetTrigger("Heal");
         }
@@ -445,7 +448,7 @@ public class PlayerScript : Actor
     {
         if (CanRoll() && Input.GetKeyDown(KeyCode.Space))
         {
-            if (stamina < rollStaminaCost) return;
+            if (stamina < rollStaminaCost || animator.GetBool("isAttacking")) return;
 
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
@@ -478,7 +481,7 @@ public class PlayerScript : Actor
 
     bool CanRoll()
     {
-        return Time.time >= lastRollTime + rollCooldown;
+        return ( (Time.time >= lastRollTime + rollCooldown));
     }
 
 
