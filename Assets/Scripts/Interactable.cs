@@ -4,42 +4,35 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    private GameObject weaponSocket;
+    public GameObject interactPanel;
 
-    // Start is called before the first frame update
-    void Start()
+    public bool isPlayer(Collider other)
     {
-        weaponSocket = GameObject.FindGameObjectWithTag("WeaponSocket");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return other.gameObject.name.Equals("Player");
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isPlayer(other)) return;
+        interactPanel.SetActive(true);
+    }
 
-        if (other.gameObject.name == "Player")
+    private void OnTriggerExit(Collider other)
+    {
+        if (!isPlayer(other)) return;
+        interactPanel.SetActive(false);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (isPlayer(other))
         {
-            Transform parentTransform = weaponSocket.transform;
 
-            // Iterate through all children
-            for (int i = 0; i < parentTransform.childCount; i++)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                // Get the child at index i
-                Transform child = parentTransform.GetChild(i);
-
-                // Do something with the child
-                Debug.Log("Child " + i + ": " + child.gameObject.name);
-                if (child.gameObject.name == "Club")
-                {
-                    child.gameObject.GetComponent<WeaponScript>().isInPlayerInventory = true;
-                }
+                interactPanel.SetActive(false);
+                gameObject.GetComponent<Animator>().SetTrigger("open");
             }
-
-            Destroy(gameObject);
         }
     }
 }
