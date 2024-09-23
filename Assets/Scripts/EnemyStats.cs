@@ -8,4 +8,5 @@ public class EnemyStats : ScriptableObject
     public int Dexterity;
     public int Intelligence;
     public int MaxHP;
+    public float SlowDown;
 }

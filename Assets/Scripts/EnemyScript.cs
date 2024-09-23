@@ -7,7 +7,7 @@ public class EnemyScript : Actor
     AudioSource audioSource;
     public int soulsDrop;
     public EnemyStats stats;
-
+    public float SlowDown;
 
 
     public void ApplyStats()
@@ -20,6 +20,7 @@ public class EnemyScript : Actor
             Intelligence = stats.Intelligence;
             MaxHP = stats.MaxHP;
             CurrentHP = MaxHP;
+            SlowDown = stats.SlowDown;
         }
     }
 

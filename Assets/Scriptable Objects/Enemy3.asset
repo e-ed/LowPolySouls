@@ -17,3 +17,4 @@ MonoBehaviour:
   Dexterity: 3
   Intelligence: 2
   MaxHP: 100
+  SlowDown: 1.2

@@ -12,6 +12,8 @@ public class EnemyNavScript : MonoBehaviour
     public float cooldown;
     private float timeUntilNextAttack;
     float distanceToPlayer = float.MaxValue;
+    public float aggroRadius = 10;
+    public bool hasSetTrigger = false;
 
 
     // Start is called before the first frame update
@@ -41,7 +43,7 @@ public class EnemyNavScript : MonoBehaviour
             distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         }
 
-        if (distanceToPlayer > 10) return;
+        if (distanceToPlayer > aggroRadius) return;
 
         if (gameObject.GetComponent<EnemyScript>().isAttacking)
         {
@@ -58,10 +60,11 @@ public class EnemyNavScript : MonoBehaviour
             timeUntilNextAttack -= Time.deltaTime;
         }
 
-        if (distanceToPlayer < 2 && timeUntilNextAttack <= 0)
+        if (!hasSetTrigger && distanceToPlayer <= (gameObject.GetComponent<NavMeshAgent>().stoppingDistance) && timeUntilNextAttack <= 0)
         {
             animator.SetTrigger("Attack");
             timeUntilNextAttack = cooldown;
+            hasSetTrigger = true;
         }
 
     }

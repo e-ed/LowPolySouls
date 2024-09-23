@@ -55,7 +55,7 @@ public class AttackEnd : StateMachineBehaviour
             //Debug.Log("Weapon GameObject found: " + weapon.name);
 
             // Access the MeshCollider and enable it
-            MeshCollider collider = weapon.GetComponent<MeshCollider>();
+            Collider collider = weapon.GetComponent<Collider>();
             if (collider != null)
             {
                 collider.enabled = true;
@@ -90,7 +90,7 @@ public class AttackEnd : StateMachineBehaviour
 
 
         // Access the MeshCollider and disable it
-        MeshCollider collider = weapon.GetComponent<MeshCollider>();
+        Collider collider = weapon.GetComponent<Collider>();
         if (collider == null)
         {
             Debug.LogError("MeshCollider not found on the weapon GameObject.");

@@ -38,7 +38,6 @@ public class PlayerScript : Actor
     public float rayDistance;
     float enemyHeight;
     Transform playerNeck;
-    private CenterCamera followRecenter;
     public int baseXP = 10;
     public float exponent = 1.7f;
     PlayerScript player;
@@ -198,7 +197,6 @@ public class PlayerScript : Actor
         cam = GameObject.Find("Camera").transform;
         targetCircle = (GameObject)Resources.Load("Target Circle");
         playerNeck = GameObject.FindWithTag("Neck").transform;
-        followRecenter = vcam.GetComponent<CenterCamera>();
         audioSource = GetComponent<AudioSource>();
 
 
@@ -303,14 +301,6 @@ public class PlayerScript : Actor
         vcam.m_Orbits[1].m_Radius = 5;
         vcam.m_Orbits[2].m_Radius = 4.5f;
         Destroy(currentTarget);
-    }
-
-    void RecenterCamera()
-    {
-        if (followRecenter != null)
-        {
-            followRecenter.Recenter = true; // This will start the recentering process
-        }
     }
 
     void handleTargetInput()

@@ -28,7 +28,7 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
     {
         weapon = FindChildWithTag(animator.gameObject, "Weapon");
         weapon.GetComponent<WeaponScript>().ResetDamageFlag();
-        slowDown = 1.4f;
+        slowDown = animator.gameObject.GetComponent<EnemyScript>().stats.SlowDown;
         timePassed = 0;
         animator.SetFloat("Telegraph", 0.1f);
         animator.gameObject.GetComponent<Actor>().isAttacking = true;
@@ -45,7 +45,7 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
         } else
         {
             animator.SetFloat("Telegraph", 1);
-            weapon.GetComponent<MeshCollider>().enabled = true;
+            weapon.GetComponent<Collider>().enabled = true;
         }
     }
 
@@ -53,9 +53,9 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
     {
         animator.gameObject.GetComponent<Actor>().isAttacking = false;
         if (weapon == null) return;
-        MeshCollider collider = weapon.GetComponent<MeshCollider>();
+        Collider collider = weapon.GetComponent<Collider>();
         if (collider  != null) {
-            weapon.GetComponent<MeshCollider>().enabled = false;
+            weapon.GetComponent<Collider>().enabled = false;
         }
     }
 
