@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skeleton Boss
   m_EditorClassIdentifier: 
   Level: 3
-  Strength: 12
+  Strength: 9
   Dexterity: 5
-  Intelligence: 6
+  Intelligence: 4
   MaxHP: 1000
   SlowDown: 0.3

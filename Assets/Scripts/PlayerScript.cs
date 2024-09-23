@@ -45,6 +45,7 @@ public class PlayerScript : Actor
     public int flaskCharges = 10;
     public TextMeshProUGUI charges;
     public bool isHealing;
+    public GameObject bossHpBar;
 
 
     public int Souls
@@ -138,13 +139,25 @@ public class PlayerScript : Actor
         EventManager.StartListening("PlayerDied", OnPlayerDied);
     }
 
+    void resetBossesAggrodState()
+    {
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Boss");
+
+        foreach (GameObject go in gameObjects)
+        {
+            go.GetComponent<EnemyNavScript>().hasAggrodOnce = false;
+        }
+    }
+
     void OnPlayerDied(object obj)
     {
         if (!hasDied)
         {
             hasDied = true;
             animator.SetTrigger("Dying");
+            bossHpBar.SetActive(false);
             Invoke("Respawn", 5f);  // Call Respawn after 5 seconds
+            Invoke("resetBossesAggrodState", 5f);
         }
     }
 

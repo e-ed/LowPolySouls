@@ -14,6 +14,7 @@ public class EnemyNavScript : MonoBehaviour
     float distanceToPlayer = float.MaxValue;
     public float aggroRadius = 10;
     public bool hasSetTrigger = false;
+    public bool hasAggrodOnce = false;
 
 
     // Start is called before the first frame update
@@ -44,6 +45,12 @@ public class EnemyNavScript : MonoBehaviour
         }
 
         if (distanceToPlayer > aggroRadius) return;
+
+        if (gameObject.GetComponent<EnemyScript>().isBossType && (!hasAggrodOnce))
+        {
+            EventManager.TriggerEvent("PlayerAggro", gameObject.GetComponent<EnemyScript>());
+            hasAggrodOnce = true;
+        }
 
         if (gameObject.GetComponent<EnemyScript>().isAttacking)
         {

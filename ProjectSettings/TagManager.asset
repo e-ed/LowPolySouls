@@ -15,6 +15,7 @@ TagManager:
   - ActorWithMesh
   - Panel
   - Neck
+  - Boss
   layers:
   - Default
   - TransparentFX

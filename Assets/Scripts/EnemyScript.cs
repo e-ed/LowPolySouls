@@ -8,6 +8,7 @@ public class EnemyScript : Actor
     public int soulsDrop;
     public EnemyStats stats;
     public float SlowDown;
+    public bool isBossType;
 
 
     public void ApplyStats()
