@@ -48,10 +48,19 @@ public class BossHealthBar : MonoBehaviour
 
     void Update()
     {
+        if (currentActor == null) return;
+
+        if (bossHealthBar == null)
+        {
+            bossHealthBar = GameObject.FindWithTag("BossHealthBar");
+        }
+
         if (!bossHealthBar.activeSelf)
         {
             return;
         }
+
+        if (currentActor == null) return;
 
         if (healthBarSlider.value != currentActor.CurrentHP)
         {
@@ -88,6 +97,11 @@ public class BossHealthBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        bossHealthBar.SetActive(false);
+        EventManager.StopListening("PlayerAggro", OnPlayerAggro);
+        if (bossHealthBar != null)
+        {
+            bossHealthBar.SetActive(false);
+        }
+        currentActor = null;
     }
 }

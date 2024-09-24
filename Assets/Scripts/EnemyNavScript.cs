@@ -67,11 +67,20 @@ public class EnemyNavScript : MonoBehaviour
             timeUntilNextAttack -= Time.deltaTime;
         }
 
-        if (!hasSetTrigger && distanceToPlayer <= (gameObject.GetComponent<NavMeshAgent>().stoppingDistance) && timeUntilNextAttack <= 0)
-        {
-            animator.SetTrigger("Attack");
-            timeUntilNextAttack = cooldown;
-            hasSetTrigger = true;
+        if (distanceToPlayer <= (gameObject.GetComponent<NavMeshAgent>().stoppingDistance)) {
+            //transform.LookAt(playerTransform);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, playerTransform.rotation, 5 * Time.deltaTime);
+            Vector3 direction = playerTransform.position - transform.position; // Direction towards the player
+            Quaternion targetRotation = Quaternion.LookRotation(direction);    // Create rotation towards the player
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 650 * Time.deltaTime); // Smooth rotation
+
+            if (!hasSetTrigger && timeUntilNextAttack <= 0)
+            {
+                animator.SetTrigger("Attack");
+                timeUntilNextAttack = cooldown;
+                hasSetTrigger = true;
+            }
+
         }
 
     }

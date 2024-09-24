@@ -52,6 +52,8 @@ public class BonfireScript : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 vcam.enabled = false;
                 Time.timeScale = 0;
+                player.flaskCharges = 10;
+                EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
             }
         }
     }

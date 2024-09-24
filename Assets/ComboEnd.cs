@@ -4,11 +4,33 @@ using UnityEngine;
 
 public class ComboEnd : StateMachineBehaviour
 {
+    GameObject weapon;
+
+    GameObject FindChildWithTag(GameObject parent, string tag)
+    {
+        Transform[] children = parent.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in children)
+        {
+            if (child.CompareTag(tag))
+            {
+                return child.gameObject;
+            }
+        }
+
+        return null;
+    }
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.gameObject.GetComponent<EnemyNavScript>().hasSetTrigger = false;
+        weapon = FindChildWithTag(animator.gameObject, "Weapon");
+        weapon.GetComponent<Collider>().enabled = false;
+
+
+
+    }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,7 +41,6 @@ public class ComboEnd : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.gameObject.GetComponent<EnemyNavScript>().hasSetTrigger = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

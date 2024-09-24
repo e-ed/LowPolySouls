@@ -16,6 +16,7 @@ TagManager:
   - Panel
   - Neck
   - Boss
+  - BossHealthBar
   layers:
   - Default
   - TransparentFX

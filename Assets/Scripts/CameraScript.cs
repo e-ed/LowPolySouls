@@ -15,12 +15,12 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
-        //if (freeLookCamera.LookAt == null)
-        //{
-        //    Transform player = GameObject.Find("Player").transform;
-        //    freeLookCamera.LookAt = player;
-        //    freeLookCamera.Follow = player;
-        //}
+        if (freeLookCamera.LookAt == null)
+        {
+            Transform player = GameObject.Find("Player").transform;
+            freeLookCamera.LookAt = player;
+            freeLookCamera.Follow = player;
+        }
 
         float zoomInput = Input.GetAxis("Mouse ScrollWheel");
 

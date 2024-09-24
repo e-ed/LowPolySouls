@@ -55,7 +55,7 @@ public class EnemyAttackTelegraph : StateMachineBehaviour
         animator.gameObject.GetComponent<Actor>().isAttacking = false;
         if (weapon == null) return;
         Collider collider = weapon.GetComponent<Collider>();
-        if (collider  != null) {
+        if (collider  != null && !animator.gameObject.GetComponent<EnemyScript>().isBossType) {
             weapon.GetComponent<Collider>().enabled = false;
         }
     }

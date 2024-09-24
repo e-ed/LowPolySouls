@@ -6226,7 +6226,7 @@ GameObject:
   - component: {fileID: 484249007643557461}
   m_Layer: 3
   m_Name: Enemy8
-  m_TagString: ActorWithScript
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6338,7 +6338,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 2.11437
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -6355,6 +6355,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0.9
+  aggroRadius: 10
+  hasSetTrigger: 0
+  hasAggrodOnce: 0
 --- !u!114 &4845246316199506800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6372,6 +6375,8 @@ MonoBehaviour:
   hasDied: 0
   soulsDrop: 15
   stats: {fileID: 11400000, guid: d0df161e1b5f771489dae175c74144cc, type: 2}
+  SlowDown: 0
+  isBossType: 0
 --- !u!82 &484249007643557461
 AudioSource:
   m_ObjectHideFlags: 0

@@ -13,8 +13,7 @@ public class HealScript : StateMachineBehaviour
     {
         shieldSocket = GameObject.Find("Shield Socket").transform.GetChild(0).gameObject;
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
-        charges = GameObject.Find("Charges").GetComponent<TextMeshProUGUI>();
-        charges.SetText(player.flaskCharges.ToString());
+        //charges = GameObject.Find("Charges").GetComponent<TextMeshProUGUI>();
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -27,7 +26,8 @@ public class HealScript : StateMachineBehaviour
             player.CurrentHP = player.MaxHP;
         }
         player.flaskCharges--;
-        charges.SetText(player.flaskCharges.ToString());
+        //charges.SetText(player.flaskCharges.ToString());
+        EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

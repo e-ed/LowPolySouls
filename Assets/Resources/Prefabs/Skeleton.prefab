@@ -774,7 +774,6 @@ GameObject:
   - component: {fileID: 8501949065170539025}
   - component: {fileID: 7647536829359595137}
   - component: {fileID: 6286369730981191720}
-  - component: {fileID: 3089774371288939082}
   m_Layer: 3
   m_Name: LowPolySkeleton_Sword
   m_TagString: Weapon
@@ -882,32 +881,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.12091466, y: 0.581869, z: 0.055194948}
-  m_Center: {x: 0.0032782536, y: 0.23140089, z: -0.008550089}
---- !u!64 &3089774371288939082
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3968441568344008033}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7670444696428019547, guid: 5ef67247d1c334d41bd49c9719015c6e, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.1267064, y: 0.5818689, z: 0.061646312}
+  m_Center: {x: 0.0037534095, y: 0.23140095, z: -0.008883684}
 --- !u!1 &3968441568344008036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,7 +2106,7 @@ GameObject:
   - component: {fileID: 8141531240580046027}
   m_Layer: 3
   m_Name: Skeleton
-  m_TagString: ActorWithScript
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,5 +1,7 @@
 using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -46,6 +48,7 @@ public class PlayerScript : Actor
     public TextMeshProUGUI charges;
     public bool isHealing;
     public GameObject bossHpBar;
+    public Dictionary<string, TransformData> enemies = new Dictionary<string, TransformData>();
 
 
     public int Souls
@@ -149,6 +152,7 @@ public class PlayerScript : Actor
         }
     }
 
+
     void OnPlayerDied(object obj)
     {
         if (!hasDied)
@@ -157,7 +161,22 @@ public class PlayerScript : Actor
             animator.SetTrigger("Dying");
             bossHpBar.SetActive(false);
             Invoke("Respawn", 5f);  // Call Respawn after 5 seconds
-            Invoke("resetBossesAggrodState", 5f);
+            Invoke("removeAllEnemies", 4.8f);
+            //Invoke("resetBossesAggrodState", 5f);
+            Invoke("spawnEnemies", 5f);
+        }
+    }
+
+    void removeAllEnemies()
+    {
+        GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
+
+        // Combine the two arrays
+        GameObject[] allEnemies = enemiesList.Concat(bosses).ToArray();
+
+        foreach (GameObject gameObj in allEnemies) {
+            Destroy(gameObj);
         }
     }
 
@@ -181,9 +200,48 @@ public class PlayerScript : Actor
         //animator.SetBool("Block", false);  // Reset animation states if necessary
         animator.SetTrigger("Respawn");  // Optionally play a respawn animation
         rb.velocity = Vector3.zero;  // Stop any momentum the player had
+        flaskCharges = 10;
+        EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
         resetTarget();
     }
 
+    void saveEnemyData()
+    {
+        GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
+
+        // Combine the two arrays
+        GameObject[] allEnemies = enemiesList.Concat(bosses).ToArray();
+
+
+        foreach (GameObject go in enemiesList)
+        {
+            TransformData enemyTransform = new TransformData(go.transform);
+            enemies.Add(new string(go.name), enemyTransform);
+            Debug.Log("Adding " + go.name + " with position " + enemyTransform.position);
+        }
+
+        foreach (GameObject go in bosses)
+        {
+            TransformData enemyTransform = new TransformData(go.transform);
+            enemies.Add(new string(go.name.Split(" ")[0]), enemyTransform);
+            Debug.Log("Adding " + go.name.Split(" ")[0] + " with position " + go.transform);
+
+        }
+    }
+
+    void spawnEnemies()
+    {
+        foreach (KeyValuePair<string, TransformData> enemy in enemies)
+        {
+            Debug.Log(enemy.Key.Split(" ")[0] + " - " + enemy.Value);
+            Actor spawnedEnemy = Instantiate(Resources.Load<Actor>("Prefabs/" + enemy.Key.Split(" ")[0]), enemy.Value.position, enemy.Value.rotation);
+            if (spawnedEnemy.GetComponent<EnemyScript>().isBossType)
+            {
+                spawnedEnemy.GetComponent<BossHealthBar>().bossHealthBar = bossHpBar;
+            }
+        }
+    }
 
 
     private void LoadDungeonScene()
@@ -212,14 +270,15 @@ public class PlayerScript : Actor
         playerNeck = GameObject.FindWithTag("Neck").transform;
         audioSource = GetComponent<AudioSource>();
 
+        saveEnemyData();
+
+        EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
 
         //inventory.Add((GameObject) Resources.Load("Low-Poly Weapons/Prefabs/Sword"));
         //inventory.Add((GameObject)Resources.Load("Low-Poly Weapons/Prefabs/Dagger"));
         //GameObject.Find("Player").GetComponent<PlayerScript>().inventory.Add((GameObject)Resources.Load("PurePoly/Free_Swords/Prefabs/PP_Sword_0222"));
         //GameObject.Find("Player").GetComponent<PlayerScript>().inventory.Add((GameObject)Resources.Load("Club"));
     }
-
-
 
     void Update()
     {
@@ -249,7 +308,7 @@ public class PlayerScript : Actor
 
     void handleCombatInput()
     {
-        if (levelUpPanel.activeSelf)
+        if (levelUpPanel != null && levelUpPanel.activeSelf)
         {
             return;
         }
@@ -420,7 +479,11 @@ public class PlayerScript : Actor
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (cam == null) return;
+        if (cam == null)
+        {
+            cam = GameObject.Find("Camera").transform;
+        }
+
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
 
@@ -546,3 +609,17 @@ public class PlayerScript : Actor
     }
 }
 
+public class TransformData
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+
+    public TransformData(Transform transform)
+    {
+        // Copy the position, rotation, and scale from the Transform
+        this.position = transform.position;
+        this.rotation = transform.rotation;
+        this.scale = transform.localScale;
+    }
+}
