@@ -46,7 +46,7 @@ public class AttackEnd : StateMachineBehaviour
 
         weapon = weaponSocket.GetComponent<WeaponManager>().currentWeapon;
         weaponSpeed = weapon.GetComponent<WeaponScript>().weaponSpeed;
-        animator.SetFloat("weaponSpeed", weaponSpeed);
+        animator.SetFloat("weaponSpeed", weaponSpeed+(0.04f * animator.gameObject.GetComponent<PlayerScript>().Dexterity));
 
 
         // Check if the weapon GameObject was found

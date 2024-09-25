@@ -122,5 +122,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   newWeapon: {fileID: 0}
   weaponDamage: 5
-  weaponSpeed: 2
+  weaponSpeed: 1.5
   isInPlayerInventory: 0
+  hasDealtDamage: 0

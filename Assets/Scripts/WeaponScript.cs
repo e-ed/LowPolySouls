@@ -73,7 +73,7 @@ public class WeaponScript : MonoBehaviour
         //// Calculate final damage
         //int attackDamage = (int) Math.Round((baseDamage + randomDamageModifier) * criticalMultiplier);
 
-        bool isCritical = UnityEngine.Random.Range(0, 100) < 30;
+        bool isCritical = UnityEngine.Random.Range(0, 100) < attackSource.Dexterity;
         if (isCritical) attackDamage *= 2;
 
         attackTarget.CurrentHP -= attackDamage;
