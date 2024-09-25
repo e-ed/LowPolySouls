@@ -175,7 +175,8 @@ public class PlayerScript : Actor
         // Combine the two arrays
         GameObject[] allEnemies = enemiesList.Concat(bosses).ToArray();
 
-        foreach (GameObject gameObj in allEnemies) {
+        foreach (GameObject gameObj in allEnemies)
+        {
             Destroy(gameObj);
         }
     }
@@ -282,7 +283,7 @@ public class PlayerScript : Actor
 
     void Update()
     {
-        handleUnstuckMe();
+        handleDevCommands();
 
         if (hasDied) return;
 
@@ -290,19 +291,41 @@ public class PlayerScript : Actor
         handleTargetInput();
         handleCombatInput();
         handleStaminaGain();
+        handleTargetCameraChange();
     }
 
-    void handleUnstuckMe()
+    void handleTargetCameraChange()
+    {
+        if (hasTarget)
+        {
+            vcam.m_RecenterToTargetHeading.m_enabled = true;
+            vcam.m_RecenterToTargetHeading.m_WaitTime = 0;
+            vcam.m_RecenterToTargetHeading.m_RecenteringTime = 0;
+            gameObject.transform.LookAt(enemyTarget.transform);
+        }
+    }
+
+    void handleDevCommands()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
             rb.MovePosition(new Vector3(2, 2, 107));
         }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            rb.MovePosition(new Vector3(16, 0, 161));
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            GainSouls(1000);
+        }
     }
 
     private void FixedUpdate()
     {
-        if (isAttacking || animator.GetBool("Block") || isHealing ||  hasDied) return;
+        if (isAttacking || animator.GetBool("Block") || isHealing || hasDied) return;
         handleMovementInput();
     }
 
@@ -364,14 +387,15 @@ public class PlayerScript : Actor
     {
         vcam.m_YAxis.m_MaxSpeed = 0.05f;
         vcam.m_XAxis.m_MaxSpeed = 3;
+        vcam.m_RecenterToTargetHeading.m_enabled = false;
 
         hasTarget = false;
         //vcam.GetComponent<CinemachineTargetGroup>().RemoveMember(enemyTarget.transform);
         vcam.LookAt = playerNeck;
         //vcam.Follow = gameObject.transform;
-        vcam.m_Orbits[0].m_Radius = 6;
-        vcam.m_Orbits[1].m_Radius = 5;
-        vcam.m_Orbits[2].m_Radius = 4.5f;
+        vcam.m_Orbits[0].m_Radius = 9;
+        vcam.m_Orbits[1].m_Radius = 6;
+        vcam.m_Orbits[2].m_Radius = 2.5f;
         Destroy(currentTarget);
     }
 
@@ -380,28 +404,6 @@ public class PlayerScript : Actor
         if (hasTarget && enemyTarget == null)
         {
             resetTarget();
-        }
-
-        if (hasTarget)
-        {
-            //Ray ray = new Ray(vcam.transform.position+new Vector3(0, 0, -1f), vcam.transform.forward);
-            //LayerMask layerMask = LayerMask.GetMask("Player", "Enemy");
-            //RaycastHit[] hits = Physics.RaycastAll(ray, 50f, layerMask);
-
-            //// Iterate over each hit object
-            //foreach (RaycastHit hit in hits)
-            //{
-            //    Debug.Log("Hit: " + hit.collider.name);
-            //    // Do something with each hit, like applying damage or effects
-            //}
-
-            //Debug.DrawRay(vcam.transform.position, vcam.transform.forward, Color.red, 2.0f); // '2.0f' sets how long the ray is visible
-
-            // RecenterCamera();
-            // Update position based on the enemy's height
-            //RectTransform rt = currentTarget.GetComponent<RectTransform>();
-            //float offsetY = enemyHeight - 0.25f; // Adjust as needed
-            //rt.anchoredPosition = new Vector2(0, offsetY); // Adjust Y position to align with enemy height
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -498,8 +500,12 @@ public class PlayerScript : Actor
         Vector3 movement = inputDir * speed * Time.deltaTime;
 
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
-        animator.SetFloat("Horizontal", Mathf.Abs(movement.x));
-        animator.SetFloat("Vertical", Mathf.Abs(movement.z));
+
+        float horizontal = hasTarget ? horizontalInput : Mathf.Abs(movement.x);
+        float vertical = hasTarget ? verticalInput : Mathf.Abs(movement.z);
+
+        animator.SetFloat("Horizontal", horizontal);
+        animator.SetFloat("Vertical", vertical);
 
 
         if (inputDir != Vector3.zero)
@@ -516,37 +522,17 @@ public class PlayerScript : Actor
         {
             if (stamina < rollStaminaCost) return;
 
-            //float horizontalInput = Input.GetAxisRaw("Horizontal");
-            //float verticalInput = Input.GetAxisRaw("Vertical");
 
-            //Vector3 camForward = cam.forward;
-            //Vector3 camRight = cam.right;
-
-            //camForward.y = 0;
-            //camRight.y = 0;
-
-            //Vector3 forwardRelative = verticalInput * camForward;
-            //Vector3 rightRelative = horizontalInput * camRight;
-            //Vector3 movementDirection = forwardRelative + rightRelative;
-
-            //Vector3 inputDir = new Vector3(movementDirection.x, 0f, movementDirection.z).normalized;
-
-
-            //// Add a boost in the direction of the input while rolling
-            //Vector3 boostForce = inputDir * rollSpeed;
-            //rb.AddForce(boostForce, ForceMode.Impulse);
 
             animator.SetTrigger("isRolling");
-            //isRolling = true;
-            //isGrounded = false;
 
-            
+
         }
     }
 
     bool CanRoll()
     {
-        return ( (Time.time >= lastRollTime + rollCooldown));
+        return ((Time.time >= lastRollTime + rollCooldown));
     }
 
 
@@ -599,6 +585,7 @@ public class PlayerScript : Actor
     private void setMaxHp()
     {
         MaxHP = 80 + (Strength * 2);
+        player.CurrentHP = MaxHP;
         EventManager.TriggerEvent("SetMaxHp", null);
     }
 

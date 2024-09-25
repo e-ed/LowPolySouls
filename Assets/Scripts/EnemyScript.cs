@@ -34,10 +34,6 @@ public class EnemyScript : Actor
 
     }
 
-    void Start()
-    {
-    }
-
     private void Step()
     {
         audioSource.Play();

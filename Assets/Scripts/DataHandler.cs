@@ -28,7 +28,7 @@ public class DataHandler : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Make it persist across scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -77,10 +77,8 @@ public class DataHandler : MonoBehaviour
                 positionZ = 107
             };
 
-            // Serialize the default data to JSON
             string json = JsonUtility.ToJson(defaultData, true);
 
-            // Write the JSON to the file
             File.WriteAllText(filePath, json);
             Debug.Log("Default data created and saved to " + filePath);
 
