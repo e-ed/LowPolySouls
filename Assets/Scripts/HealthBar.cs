@@ -9,7 +9,7 @@ public class HealthBar : MonoBehaviour
     public Slider healthBarSlider;
     Actor currentActor;
     public Slider easeHealthSlider;
-    private float lerpDuration = 1.5f;  // Adjust this value as needed
+    private float lerpDuration = 1.5f;
     private Coroutine lerpCoroutine;
 
     private void OnEnable()

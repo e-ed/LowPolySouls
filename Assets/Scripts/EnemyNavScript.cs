@@ -35,7 +35,6 @@ public class EnemyNavScript : MonoBehaviour
 
         animator.SetFloat("Horizontal", speed);
 
-
         if (playerTransform != null)
         {
             distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);

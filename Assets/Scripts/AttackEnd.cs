@@ -36,6 +36,9 @@ public class AttackEnd : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        weapon = weaponSocket.GetComponent<WeaponManager>().currentWeapon;
+        weaponSpeed = weapon.GetComponent<WeaponScript>().weaponSpeed;
+
         player.Stamina -= player.attackStaminaCost;
         animator.gameObject.GetComponent<PlayerScript>().isAttacking = true;
         previousStateHash = animator.GetCurrentAnimatorStateInfo(layerIndex).shortNameHash;
@@ -44,8 +47,7 @@ public class AttackEnd : StateMachineBehaviour
         animator.SetBool("isAttacking", true);
 
 
-        weapon = weaponSocket.GetComponent<WeaponManager>().currentWeapon;
-        weaponSpeed = weapon.GetComponent<WeaponScript>().weaponSpeed;
+        
         animator.SetFloat("weaponSpeed", weaponSpeed+(0.04f * animator.gameObject.GetComponent<PlayerScript>().Dexterity));
 
 
@@ -111,4 +113,5 @@ public class AttackEnd : StateMachineBehaviour
 
 
     }
+
 }

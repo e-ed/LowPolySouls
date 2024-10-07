@@ -53,27 +53,17 @@ public class WeaponScript : MonoBehaviour
         Actor attackTarget = other.gameObject.GetComponent<Actor>();
         Actor attackSource = topMostParentOfAttackSource.GetComponent<Actor>();
 
-        if (hasDealtDamage) return;
+        if (hasDealtDamage || attackTarget == null || attackTarget.isRolling) return;
 
-        if (attackTarget == null) return;
-
-        if (attackTarget.isRolling) return;
-
-        if (!attackSource.name.Equals("Player") && attackTarget.name.Equals("Player")) {
-
+        if (!attackSource.name.Equals("Player") && attackTarget.name.Equals("Player"))
+        {
             hasDealtDamage = true;
         }
 
-
         int attackDamage = ((int)weaponDamage) + (attackSource.Strength * attackSource.Level) + UnityEngine.Random.Range(0, attackSource.Level + 5);
-        //int baseDamage = (int)weaponDamage + (attackSource.Strength * attackSource.Level);
-        //int randomDamageModifier = UnityEngine.Random.Range(-attackSource.Level, attackSource.Level * 2);
-        //float criticalMultiplier = UnityEngine.Random.Range(0.8f, 1.5f);  // Random multiplier for extra damage variability
-
-        //// Calculate final damage
-        //int attackDamage = (int) Math.Round((baseDamage + randomDamageModifier) * criticalMultiplier);
 
         bool isCritical = UnityEngine.Random.Range(0, 100) < attackSource.Dexterity;
+
         if (isCritical) attackDamage *= 2;
 
         attackTarget.CurrentHP -= attackDamage;
