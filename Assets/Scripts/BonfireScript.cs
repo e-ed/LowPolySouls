@@ -10,6 +10,7 @@ public class BonfireScript : MonoBehaviour
     GameObject fire;
     public GameObject levelUpPanel;
     public GameObject interactPanel;
+    public GameObject playerItems;
     private TextMeshProUGUI interactText;
     public CinemachineFreeLook vcam;
     // Start is called before the first frame update
@@ -37,13 +38,12 @@ public class BonfireScript : MonoBehaviour
         {
 
             PlayerScript player = other.gameObject.GetComponent<PlayerScript>();
-            // TODO: save player position
-            // inside player class? then read from file
-            // also add a panel to show bonfire lit
             fire.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.E))
             {
+                EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
+                playerItems.SetActive(false);
                 interactPanel.SetActive(false);
                 player.CurrentHP = player.MaxHP;
                 player.flaskCharges = 10;
@@ -53,7 +53,6 @@ public class BonfireScript : MonoBehaviour
                 vcam.enabled = false;
                 Time.timeScale = 0;
                 player.flaskCharges = 10;
-                EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
             }
         }
     }

@@ -7,6 +7,7 @@ public class MenuScript : MonoBehaviour
 
     public GameObject panel;
     public GameObject playerStats;
+    public GameObject playerItems;
     public CinemachineFreeLook vcam;
     public GameObject levelUpPanel;
     public PlayerScript player;
@@ -45,6 +46,7 @@ public class MenuScript : MonoBehaviour
                 Cursor.visible = false;
                 vcam.enabled = true;
                 Time.timeScale = 1;
+                playerItems.SetActive(true);
                 return;
             }
 

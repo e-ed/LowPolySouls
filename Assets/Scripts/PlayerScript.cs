@@ -48,7 +48,7 @@ public class PlayerScript : Actor
     public TextMeshProUGUI charges;
     public bool isHealing;
     public GameObject bossHpBar;
-    public Dictionary<string, TransformData> enemies = new Dictionary<string, TransformData>();
+    public Dictionary<string, EnemiesData> enemies = new Dictionary<string, EnemiesData>();
 
 
     public int Souls
@@ -217,14 +217,14 @@ public class PlayerScript : Actor
 
         foreach (GameObject go in enemiesList)
         {
-            TransformData enemyTransform = new TransformData(go.transform);
+            EnemiesData enemyTransform = new EnemiesData(go.transform);
             enemies.Add(new string(go.name), enemyTransform);
             Debug.Log("Adding " + go.name + " with position " + enemyTransform.position);
         }
 
         foreach (GameObject go in bosses)
         {
-            TransformData enemyTransform = new TransformData(go.transform);
+            EnemiesData enemyTransform = new EnemiesData(go.transform);
             enemies.Add(new string(go.name.Split(" ")[0]), enemyTransform);
             Debug.Log("Adding " + go.name.Split(" ")[0] + " with position " + go.transform);
 
@@ -233,7 +233,7 @@ public class PlayerScript : Actor
 
     void spawnEnemies()
     {
-        foreach (KeyValuePair<string, TransformData> enemy in enemies)
+        foreach (KeyValuePair<string, EnemiesData> enemy in enemies)
         {
             Debug.Log(enemy.Key.Split(" ")[0] + " - " + enemy.Value);
             Actor spawnedEnemy = Instantiate(Resources.Load<Actor>("Prefabs/" + enemy.Key.Split(" ")[0]), enemy.Value.position, enemy.Value.rotation);
@@ -300,7 +300,7 @@ public class PlayerScript : Actor
         {
             vcam.m_RecenterToTargetHeading.m_enabled = true;
             vcam.m_RecenterToTargetHeading.m_WaitTime = 0;
-            vcam.m_RecenterToTargetHeading.m_RecenteringTime = 0;
+            vcam.m_RecenterToTargetHeading.m_RecenteringTime = 0.1f;
             gameObject.transform.LookAt(enemyTarget.transform);
         }
     }
@@ -596,17 +596,3 @@ public class PlayerScript : Actor
     }
 }
 
-public class TransformData
-{
-    public Vector3 position;
-    public Quaternion rotation;
-    public Vector3 scale;
-
-    public TransformData(Transform transform)
-    {
-        // Copy the position, rotation, and scale from the Transform
-        this.position = transform.position;
-        this.rotation = transform.rotation;
-        this.scale = transform.localScale;
-    }
-}
