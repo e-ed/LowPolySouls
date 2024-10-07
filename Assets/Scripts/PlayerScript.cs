@@ -468,11 +468,6 @@ public class PlayerScript : Actor
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (cam == null)
-        {
-            cam = GameObject.Find("Camera").transform;
-        }
-
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
 
@@ -500,7 +495,6 @@ public class PlayerScript : Actor
             transform.rotation = Quaternion.LookRotation(inputDir);
         }
 
-        //vcam.m_XAxis.Value -= (horizontalInput*5);
     }
 
     void handleRollInput()
