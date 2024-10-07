@@ -68,6 +68,8 @@ public class EnemyNavScript : MonoBehaviour
         }
 
         if (distanceToPlayer <= (gameObject.GetComponent<NavMeshAgent>().stoppingDistance)) {
+            if (hasSetTrigger) return;
+
             //transform.LookAt(playerTransform);
             //transform.rotation = Quaternion.Slerp(transform.rotation, playerTransform.rotation, 5 * Time.deltaTime);
             Vector3 direction = playerTransform.position - transform.position; // Direction towards the player
