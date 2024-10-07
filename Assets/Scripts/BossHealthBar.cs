@@ -10,7 +10,7 @@ public class BossHealthBar : MonoBehaviour
     public Slider healthBarSlider;
     EnemyScript currentActor;
     public Slider easeHealthSlider;
-    private float lerpDuration = 1.5f;  // Adjust this value as needed
+    private float lerpDuration = 1.5f;
     private Coroutine lerpCoroutine;
     public GameObject bossHealthBar;
     private TextMeshProUGUI bossNameText;

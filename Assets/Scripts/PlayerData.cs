@@ -8,10 +8,8 @@ public class PlayerData
     public int dexterity;
     public int intelligence;
 
-    // Parameterless constructor for deserialization
     public PlayerData() { }
 
-    // Constructor to create PlayerData from PlayerScript
     public PlayerData(PlayerScript player)
     {
         positionX = player.transform.position.x;

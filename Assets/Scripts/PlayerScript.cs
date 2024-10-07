@@ -390,9 +390,7 @@ public class PlayerScript : Actor
         vcam.m_RecenterToTargetHeading.m_enabled = false;
 
         hasTarget = false;
-        //vcam.GetComponent<CinemachineTargetGroup>().RemoveMember(enemyTarget.transform);
         vcam.LookAt = playerNeck;
-        //vcam.Follow = gameObject.transform;
         vcam.m_Orbits[0].m_Radius = 9;
         vcam.m_Orbits[1].m_Radius = 6;
         vcam.m_Orbits[2].m_Radius = 2.5f;
@@ -416,7 +414,6 @@ public class PlayerScript : Actor
 
             LayerMask mask = LayerMask.GetMask("Enemy");
 
-            // Set up the direction and distance of the raycast
             Vector3 rayOrigin = transform.position + new Vector3(0, 1, 0);
             Vector3 rayDirection = transform.forward;
 
@@ -424,14 +421,11 @@ public class PlayerScript : Actor
             if (Physics.Raycast(rayOrigin, rayDirection, out hit, rayDistance, mask))
             {
                 hasTarget = true;
+
                 enemyTarget = hit.collider.gameObject;
 
-                //vcam.GetComponent<CinemachineTargetGroup>().AddMember(enemyTarget.transform, 2, 0);
-                //vcam.Follow = vcam.GetComponent<CinemachineTargetGroup>().m_Target;
-                //vcam.m_XAxis.m_MaxSpeed = 0;
                 vcam.m_YAxis.m_MaxSpeed = 0;
 
-                //vcam.Follow = enemyTarget.transform;
                 vcam.LookAt = enemyTarget.transform;
 
                 Collider enemyCollider = enemyTarget.GetComponent<Collider>();
@@ -449,17 +443,10 @@ public class PlayerScript : Actor
                         }
                         currentTarget = Instantiate(targetCircle, targetSpawnPoint.transform, false); // Instantiate as a child of the canvas
                         currentTarget.transform.localPosition += new Vector3(0, 0, -0.5f);
-                        //RectTransform rt = currentTarget.GetComponent<RectTransform>();
-                        //rt.anchorMin = new Vector2(0.5f, 0.5f); // Centered relative to the Canvas
-                        //rt.anchorMax = new Vector2(0.5f, 0.5f); // Centered relative to the Canvas
-                        //rt.pivot = new Vector2(0.5f, 0.5f);   // Centered pivot
-                        //rt.anchoredPosition = new Vector2(0, enemyHeight / 2); // Adjust as needed
                     }
                 }
             }
 
-            // Draw the ray in the scene view for debugging
-            Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red, 2.0f); // '2.0f' sets how long the ray is visible
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
@@ -522,11 +509,7 @@ public class PlayerScript : Actor
         {
             if (stamina < rollStaminaCost) return;
 
-
-
             animator.SetTrigger("isRolling");
-
-
         }
     }
 

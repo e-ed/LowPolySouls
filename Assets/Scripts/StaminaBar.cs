@@ -9,7 +9,7 @@ public class StaminaBar : MonoBehaviour
     public Slider staminaBarSlider;
     Actor currentActor;
     public Slider easeStaminaSlider;
-    private float lerpDuration = 0.15f;  // Adjust this value as needed
+    private float lerpDuration = 0.15f;
     private Coroutine lerpCoroutine;
     private PlayerScript playerScript;
 
@@ -46,21 +46,17 @@ public class StaminaBar : MonoBehaviour
 
         if (currentActor != null)
         {
-            //if (currentActor.name == "Player")
-            //{
-            //    healthBarSlider = GetComponent<Slider>();
-            //}
-            //else
-            //{
-                easeStaminaSlider = transform.GetChild(0).GetComponent<Slider>();
-                staminaBarSlider = transform.GetChild(1).GetComponent<Slider>();
-            //}
+
+            easeStaminaSlider = transform.GetChild(0).GetComponent<Slider>();
+            staminaBarSlider = transform.GetChild(1).GetComponent<Slider>();
+
         }
         else
         {
             Debug.LogError("Actor component not found in any parent GameObject.");
         }
     }
+
 
     void Update()
     {

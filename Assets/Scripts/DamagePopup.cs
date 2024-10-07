@@ -15,7 +15,7 @@ public class DamagePopup : MonoBehaviour
     {
         damageText = GetComponent<TextMeshPro>();
 
-        // Randomly choose left or right for the horizontal direction
+        // Randomly choose left or right
         float horizontalDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
         movementDirection = new Vector3(horizontalSpeed * horizontalDirection, initialVerticalSpeed, 0);
         currentVerticalSpeed = initialVerticalSpeed;
@@ -33,12 +33,12 @@ public class DamagePopup : MonoBehaviour
             Vector3 newPosition = transform.position + movementDirection;
             transform.position = newPosition;
 
-            // Optionally, add a fade-out effect
+            // fade-out effect
             Color color = damageText.color;
-            color.a -= Time.deltaTime * 0.5f; // Adjust fade speed as necessary
+            color.a -= Time.deltaTime * 0.5f;
             damageText.color = color;
 
-            // Destroy the popup if it's fully transparent
+            // transparent
             if (color.a <= 0)
             {
                 Destroy(gameObject);
