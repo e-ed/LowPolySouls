@@ -24,7 +24,6 @@ public class CameraScript : MonoBehaviour
 
         float zoomInput = Input.GetAxis("Mouse ScrollWheel");
 
-        // Adjust the radius of the Cinemachine FreeLook orbits based on the mouse wheel input
         if (Mathf.Abs(zoomInput) > 0.01f)
         {
             freeLookCamera.m_Orbits[0].m_Radius = Mathf.Clamp(freeLookCamera.m_Orbits[0].m_Radius - zoomInput * zoomSpeed, minRadius, maxRadius);
