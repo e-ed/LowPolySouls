@@ -45,8 +45,6 @@ public class AttackEnd : StateMachineBehaviour
 
         animator.gameObject.GetComponent<Actor>().isAttacking = true;
         animator.SetBool("isAttacking", true);
-
-
         
         animator.SetFloat("weaponSpeed", weaponSpeed+(0.04f * animator.gameObject.GetComponent<PlayerScript>().Dexterity));
 

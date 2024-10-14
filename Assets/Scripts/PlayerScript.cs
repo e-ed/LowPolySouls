@@ -132,8 +132,7 @@ public class PlayerScript : Actor
 
     void OnEnemyDied(object soulsGained)
     {
-        // Give souls to the player when an enemy dies
-        GainSouls((int)soulsGained); // Adjust soul value based on game logic
+        GainSouls((int)soulsGained);
     }
 
     void OnEnable()
@@ -425,6 +424,7 @@ public class PlayerScript : Actor
                 enemyTarget = hit.collider.gameObject;
 
                 vcam.m_YAxis.m_MaxSpeed = 0;
+                vcam.m_XAxis.m_MaxSpeed = 0;
 
                 vcam.LookAt = enemyTarget.transform;
 

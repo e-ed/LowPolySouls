@@ -45,7 +45,6 @@ public class EnemyScript : Actor
         {
             hasDied = true;
             animator.SetTrigger("Dead");
-
             EventManager.TriggerEvent("EnemyDied", soulsDrop);
         }
     }
