@@ -33,7 +33,7 @@ public class PlayerScript : Actor
     public delegate void DataLoadedHandler();
     public static event DataLoadedHandler OnDataLoaded;
     private bool hasDied = false;
-    private float rollCooldown = 0.6f; // Half a second cooldown
+    private float rollCooldown = 0.6f;
     public float lastRollTime;
     GameObject targetCircle;
     GameObject currentTarget;
@@ -118,14 +118,12 @@ public class PlayerScript : Actor
     {
         if (soulsText != null)
         {
-            // Update the text to reflect the current soul count
             soulsText.text = souls.ToString();
         }
     }
 
     void GainSouls(int soulAmount)
     {
-        // Add the souls to the player's total souls
         souls += soulAmount;
         EventManager.TriggerEvent("UpdateSoulsPanel", souls);
     }
@@ -159,7 +157,7 @@ public class PlayerScript : Actor
             hasDied = true;
             animator.SetTrigger("Dying");
             bossHpBar.SetActive(false);
-            Invoke("Respawn", 5f);  // Call Respawn after 5 seconds
+            Invoke("Respawn", 5f); 
             Invoke("removeAllEnemies", 4.8f);
             //Invoke("resetBossesAggrodState", 5f);
             Invoke("spawnEnemies", 5f);
@@ -171,7 +169,6 @@ public class PlayerScript : Actor
         GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
 
-        // Combine the two arrays
         GameObject[] allEnemies = enemiesList.Concat(bosses).ToArray();
 
         foreach (GameObject gameObj in allEnemies)
@@ -182,7 +179,7 @@ public class PlayerScript : Actor
 
     private void Respawn()
     {
-        Vector3 respawnPosition = new Vector3(2, 2, 107); // Define a method or variable to get respawn location
+        Vector3 respawnPosition = new Vector3(2, 2, 107); 
         RespawnPlayer(respawnPosition);
     }
 
@@ -196,10 +193,10 @@ public class PlayerScript : Actor
     {
         CurrentHP = MaxHP;
         stamina = maxStamina;
-        hasDied = false;  // Player is no longer dead
-        //animator.SetBool("Block", false);  // Reset animation states if necessary
-        animator.SetTrigger("Respawn");  // Optionally play a respawn animation
-        rb.velocity = Vector3.zero;  // Stop any momentum the player had
+        hasDied = false;  
+        //animator.SetBool("Block", false); 
+        animator.SetTrigger("Respawn"); 
+        rb.velocity = Vector3.zero;
         flaskCharges = 10;
         EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
         resetTarget();
@@ -210,7 +207,6 @@ public class PlayerScript : Actor
         GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
 
-        // Combine the two arrays
         GameObject[] allEnemies = enemiesList.Concat(bosses).ToArray();
 
 
@@ -441,7 +437,7 @@ public class PlayerScript : Actor
                         {
                             Destroy(currentTarget);
                         }
-                        currentTarget = Instantiate(targetCircle, targetSpawnPoint.transform, false); // Instantiate as a child of the canvas
+                        currentTarget = Instantiate(targetCircle, targetSpawnPoint.transform, false);
                         currentTarget.transform.localPosition += new Vector3(0, 0, -0.5f);
                     }
                 }

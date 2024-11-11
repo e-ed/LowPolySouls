@@ -48,18 +48,12 @@ public class AttackEnd : StateMachineBehaviour
         
         animator.SetFloat("weaponSpeed", weaponSpeed+(0.04f * animator.gameObject.GetComponent<PlayerScript>().Dexterity));
 
-
-        // Check if the weapon GameObject was found
         if (weapon != null)
         {
-            //Debug.Log("Weapon GameObject found: " + weapon.name);
-
-            // Access the MeshCollider and enable it
             Collider collider = weapon.GetComponent<Collider>();
             if (collider != null)
             {
                 collider.enabled = true;
-                //Debug.Log("MeshCollider enabled on weapon.");
             }
             else
             {
@@ -88,8 +82,6 @@ public class AttackEnd : StateMachineBehaviour
             return;
         }
 
-
-        // Access the MeshCollider and disable it
         Collider collider = weapon.GetComponent<Collider>();
         if (collider == null)
         {

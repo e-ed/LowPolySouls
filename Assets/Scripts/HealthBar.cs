@@ -59,12 +59,6 @@ public class HealthBar : MonoBehaviour
 
         if (currentActor != null)
         {
-            //if (currentActor.name == "Player")
-            //{
-            //    healthBarSlider = GetComponent<Slider>();
-            //}
-            //else
-            //{
             easeHealthSlider = transform.GetChild(0).GetComponent<Slider>();
             healthBarSlider = transform.GetChild(1).GetComponent<Slider>();
 
@@ -72,8 +66,6 @@ public class HealthBar : MonoBehaviour
             healthBarSlider.value = currentActor.MaxHP;
             easeHealthSlider.maxValue = currentActor.MaxHP;
             easeHealthSlider.value = currentActor.MaxHP;
-
-            //}
         }
         else
         {
