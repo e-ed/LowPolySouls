@@ -214,14 +214,14 @@ public class PlayerScript : Actor
         {
             EnemiesData enemyTransform = new EnemiesData(go.transform);
             enemies.Add(new string(go.name), enemyTransform);
-            Debug.Log("Adding " + go.name + " with position " + enemyTransform.position);
+            //Debug.Log("Adding " + go.name + " with position " + enemyTransform.position);
         }
 
         foreach (GameObject go in bosses)
         {
             EnemiesData enemyTransform = new EnemiesData(go.transform);
             enemies.Add(new string(go.name.Split(" ")[0]), enemyTransform);
-            Debug.Log("Adding " + go.name.Split(" ")[0] + " with position " + go.transform);
+            //Debug.Log("Adding " + go.name.Split(" ")[0] + " with position " + go.transform);
 
         }
     }
@@ -230,11 +230,12 @@ public class PlayerScript : Actor
     {
         foreach (KeyValuePair<string, EnemiesData> enemy in enemies)
         {
-            Debug.Log(enemy.Key.Split(" ")[0] + " - " + enemy.Value);
+            //Debug.Log(enemy.Key.Split(" ")[0] + " - " + enemy.Value);
             Actor spawnedEnemy = Instantiate(Resources.Load<Actor>("Prefabs/" + enemy.Key.Split(" ")[0]), enemy.Value.position, enemy.Value.rotation);
             if (spawnedEnemy.GetComponent<EnemyScript>().isBossType)
             {
                 spawnedEnemy.GetComponent<BossHealthBar>().bossHealthBar = bossHpBar;
+                spawnedEnemy.name = "Skeleton";
             }
         }
     }

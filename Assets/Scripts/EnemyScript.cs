@@ -25,13 +25,11 @@ public class EnemyScript : Actor
         }
     }
 
-
     void Awake()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         ApplyStats();
-
     }
 
     private void Step()

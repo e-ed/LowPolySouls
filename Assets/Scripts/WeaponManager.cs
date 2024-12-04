@@ -29,8 +29,6 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
 
-
-
         if (player.GetComponent<PlayerScript>().isAttacking)
             return;
 

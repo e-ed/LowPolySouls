@@ -22,10 +22,8 @@ public class MenuScript : MonoBehaviour
         PlayerScript player = FindObjectOfType<PlayerScript>();
         if (player != null)
         {
-            // Create a new PlayerData object from the player's data
             PlayerData data = new PlayerData(player);
 
-            // Save the player's data using DataHandler's singleton instance
             DataHandler.Instance.SaveData(data);
         }
         else
@@ -71,6 +69,8 @@ public class MenuScript : MonoBehaviour
             }
         } else if (Input.GetKeyDown(KeyCode.C))
         {
+            if (levelUpPanel.activeSelf) { return; }
+
             Cursor.visible = !Cursor.visible;
             playerStats.SetActive(!playerStats.activeSelf);
             if (playerStats.activeSelf)

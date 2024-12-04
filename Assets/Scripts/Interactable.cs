@@ -2,9 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     public GameObject interactPanel;
+    private bool shouldCheckForInput = false;
+    private Collider currentCollider = null;
+
+    void Update()
+    {
+        if (!shouldCheckForInput) return;
+
+        if (Input.GetKeyDown(KeyCode.E) && interactPanel.activeSelf)
+        {
+            DoInteract(currentCollider);
+        }
+    }
 
     public bool isPlayer(Collider other)
     {
@@ -14,25 +26,18 @@ public class Interactable : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!isPlayer(other)) return;
+        shouldCheckForInput = true;
+        currentCollider = other;
         interactPanel.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!isPlayer(other)) return;
+        shouldCheckForInput = false;
+        currentCollider = null;
         interactPanel.SetActive(false);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (isPlayer(other))
-        {
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                interactPanel.SetActive(false);
-                gameObject.GetComponent<Animator>().SetTrigger("open");
-            }
-        }
-    }
+    public abstract void DoInteract(Collider collider);
 }

@@ -90,16 +90,12 @@ public class WeaponScript : MonoBehaviour
 
     GameObject findTopMostParent(GameObject other)
     {
-        // Get the immediate parent
         Transform currentParent = other.transform.parent;
 
-        // Loop until there's no more parent
         while (currentParent != null)
         {
-            // Move up the hierarchy
             Transform nextParent = currentParent.parent;
 
-            // If there's another parent, update the reference
             if (nextParent != null)
             {
                 currentParent = nextParent;

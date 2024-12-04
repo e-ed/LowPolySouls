@@ -42,14 +42,15 @@ public class DataHandler : MonoBehaviour
     {
         if (string.IsNullOrEmpty(filePath))
         {
+            
             Debug.LogError("File path is null or empty");
             return;
         }
 
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(filePath, json);
-        Debug.Log("Data saved to " + filePath);
-        Debug.Log("Data saved:" + json);
+        // Debug.Log("Data saved to " + filePath);
+        //Debug.Log("Data saved:" + json);
     }
 
 
@@ -59,7 +60,7 @@ public class DataHandler : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             PlayerData data = JsonUtility.FromJson<PlayerData>(json);
-            Debug.Log("Data loaded from " + filePath);
+            //Debug.Log("Data loaded from " + filePath);
             return data;
         }
         else
@@ -80,7 +81,7 @@ public class DataHandler : MonoBehaviour
             string json = JsonUtility.ToJson(defaultData, true);
 
             File.WriteAllText(filePath, json);
-            Debug.Log("Default data created and saved to " + filePath);
+            //Debug.Log("Default data created and saved to " + filePath);
 
             return defaultData;
         }
