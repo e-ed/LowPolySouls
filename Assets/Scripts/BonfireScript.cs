@@ -28,11 +28,11 @@ public class BonfireScript : Interactable
 
             PlayerScript player = other.gameObject.GetComponent<PlayerScript>();
             fire.SetActive(true);
+            player.flaskCharges = 10;
             EventManager.TriggerEvent("flaskChargesChanged", player.flaskCharges);
             playerItems.SetActive(false);
             interactPanel.SetActive(false);
             player.CurrentHP = player.MaxHP;
-            player.flaskCharges = 10;
             levelUpPanel.SetActive(true);
             Cursor.visible = !Cursor.visible;
             Cursor.lockState = CursorLockMode.Confined;
